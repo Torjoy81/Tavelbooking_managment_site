@@ -25,12 +25,15 @@ module.exports = {
       fontFamily: {
         sans: ["Poppins", ...defaultTheme.fontFamily.sans, "DM Sans"],
         "banner-head": ["Montserrat", "cursive"],
+        dmserif: ["DM Serif", "serif"],
+        proza: ["Proza Libre", ...defaultTheme.fontFamily.sans],
       },
       backgroundImage: {
         banner: "url(./assets/img/Banner1.jpeg)",
       },
       screens: {
-        xsm: "400px",
+        xsm: { max: "400px" },
+        sm: { max: "639px" },
       },
     },
   },

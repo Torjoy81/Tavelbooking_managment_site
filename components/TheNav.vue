@@ -29,10 +29,7 @@
       @click="sidebarOpen = !sidebarOpen"
       class="block md:hidden relative z-30"
     >
-      <img
-        src="./../assets/icons/hamburger.svg"
-        class="w-8 h-8 fill-current text-gray-900"
-      />
+      <Icon name="uim:bars" class="w-6 h-6 text-white" />
     </button>
   </nav>
 </template>

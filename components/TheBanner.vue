@@ -7,15 +7,15 @@
       <div>Your travel experience</div>
     </div>
     <div class="mt-5 p-4">
-      <form class="flex flex-col md:flex-row gap-2 justify-center">
-        <InputForm type="text" placeholder="City" />
+      <form class="flex flex-col md:flex-row gap-2 justify-center items-center">
+        <BaseInputForm type="text" placeholder="City" />
         <VDatePicker
           v-model.range="range"
           :masks="masks"
           :disabled-dates="disabledDates"
         >
           <template #default="{ inputValue, inputEvents }">
-            <SvgForm
+            <BaseSvgForm
               type="text"
               placeholder="CheckIn Date"
               :value="inputValue.start"
@@ -24,21 +24,25 @@
               <template #icon>
                 <Icon name="uim:calender" class="h-5 w-5 text-green-300" />
               </template>
-            </SvgForm>
-            <IconArrow class="text-white w-8 h-8 items-center" />
-            <SvgForm
+            </BaseSvgForm>
+            <Icon
+              name="uim:arrow-circle-right"
+              class="h-8 w-8 text-white"
+              v-if="windowSc.width > 810"
+            />
+            <BaseSvgForm
               type="text"
               placeholder="CheckOut Date"
               :value="inputValue.end"
               v-on="inputEvents.end"
             >
               <template #icon>
-                <IconDate />
+                <Icon name="uim:calender" class="h-5 w-5 text-green-300" />
               </template>
-            </SvgForm>
+            </BaseSvgForm>
           </template>
         </VDatePicker>
-        <DropDown />
+        <BaseDropDown />
       </form>
     </div>
   </div>
@@ -72,4 +76,18 @@ const disabledDates = ref([
     ),
   },
 ]);
+
+const windowSc = shallowReactive({
+  width: 0,
+});
+
+onBeforeMount(() => {
+  window.addEventListener("resize", () => {
+    windowSc.width = window.innerWidth;
+  });
+});
+
+onMounted(() => {
+  windowSc.width = window.innerWidth;
+});
 </script>

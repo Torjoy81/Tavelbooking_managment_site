@@ -5,5 +5,8 @@
     <TheNav />
     <TheBanner />
   </div>
+  <section class="container mx-auto">
+    <HighlightLoacation />
+  </section>
 </template>
 <script setup lang="ts"></script>
