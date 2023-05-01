@@ -21,6 +21,13 @@ module.exports = {
         gray: {
           600: "#606060",
         },
+        ground: {
+          100: "#ffe5c0",
+          200: "#f3cc87",
+          300: "#eb853a",
+          500: "#d05507",
+          600: "#ec9b40",
+        },
       },
       fontFamily: {
         sans: ["Poppins", ...defaultTheme.fontFamily.sans, "DM Sans"],

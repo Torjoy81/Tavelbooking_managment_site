@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <h1
-      class="mb-4 text-4xl tracking-tight font-proza font-extrabold leading-none dark:text-white"
-    >
-      <span
+  <NuxtLayout name="cardwrapper">
+    <template #title
+      ><span
         class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"
         >Popular Destination</span
-      >
-    </h1>
-    <div class="grid grid-cols-2 xsm:grid-cols-1 gap-5">
+      ></template
+    >
+    <template #card>
       <BaseImageHover
         :imagesrc="palace.imagesrc"
         :city="palace.city"
@@ -16,8 +14,8 @@
         v-for="(palace, index) in destinatonData"
         :key="index"
       />
-    </div>
-  </div>
+    </template>
+  </NuxtLayout>
 </template>
 <script setup lang="ts">
 interface PopularPlace {
