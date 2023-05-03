@@ -34,5 +34,4 @@ const footerFeature = ref<
   },
 ]);
 const router = useRoute();
-console.log(router.path);
 </script>

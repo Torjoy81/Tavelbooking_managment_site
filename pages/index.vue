@@ -5,9 +5,7 @@
   <Service />
 </template>
 <script setup lang="ts">
-const { data } = await useFetch("/hotels");
+const hotelstore = useHotelStore();
 
-const hotels = ref(data);
-
-console.log(hotels);
+console.log(hotelstore.hotels);
 </script>

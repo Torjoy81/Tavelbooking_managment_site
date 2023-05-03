@@ -24,6 +24,7 @@
     "nuxt-headlessui": "^1.1.4",
     "pinia": "^2.0.35",
     "prisma": "^4.13.0",
+    "superjson": "^1.12.3",
     "v-calendar": "^3.0.3"
   }
 }
