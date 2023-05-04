@@ -4,8 +4,4 @@
   </section>
   <Service />
 </template>
-<script setup lang="ts">
-const hotelstore = useHotelStore();
-
-console.log(hotelstore.hotels);
-</script>
+<script setup lang="ts"></script>
