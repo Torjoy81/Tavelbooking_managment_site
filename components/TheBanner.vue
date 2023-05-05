@@ -14,14 +14,14 @@
         <form
           class="flex flex-col md:flex-row gap-2 justify-center items-center"
         >
-          <BaseInputForm type="text" placeholder="City" />
+          <FormTextInput type="text" placeholder="City" />
           <VDatePicker
             v-model.range="range"
             :masks="masks"
             :disabled-dates="disabledDates"
           >
             <template #default="{ inputValue, inputEvents }">
-              <BaseSvgForm
+              <FormIconInput
                 type="text"
                 placeholder="CheckIn Date"
                 :value="inputValue.start"
@@ -30,13 +30,13 @@
                 <template #icon>
                   <Icon name="uim:calender" class="h-5 w-5 text-green-300" />
                 </template>
-              </BaseSvgForm>
+              </FormIconInput>
               <Icon
                 name="uim:arrow-circle-right"
                 class="h-8 w-8 text-white"
                 v-if="windowSc.width > 810"
               />
-              <BaseSvgForm
+              <FormIconInput
                 type="text"
                 placeholder="CheckOut Date"
                 :value="inputValue.end"
@@ -45,7 +45,7 @@
                 <template #icon>
                   <Icon name="uim:calender" class="h-5 w-5 text-green-300" />
                 </template>
-              </BaseSvgForm>
+              </FormIconInput>
             </template>
           </VDatePicker>
           <BaseDropDown />
