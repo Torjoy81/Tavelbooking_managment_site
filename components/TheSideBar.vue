@@ -42,35 +42,16 @@
                 :key="option.value"
                 class="flex items-center"
               >
-                <input
+                <FormCheckBox
                   :id="`filter-${section.id}-${optionIdx}`"
-                  :value="option.value"
-                  type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  v-if="section.id === 'city'"
-                  v-model="categoryCity"
+                  :label-name="option.label"
+                  :Value="option.value"
+                  v-model:city="category.city"
+                  v-model:hotel_service="category.hotel_service"
+                  v-model:room_service="category.room_service"
+                  :filter-name="section.id"
+                  @checked="callTheAlert()"
                 />
-                <input
-                  :id="`filter-${section.id}-${optionIdx}`"
-                  :value="option.value"
-                  type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  v-else-if="section.id === 'hotel_sevice'"
-                  v-model="categoryHotelService"
-                />
-                <input
-                  :id="`filter-${section.id}-${optionIdx}`"
-                  :value="option.value"
-                  type="checkbox"
-                  class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  v-else
-                  v-model="categoryRoomService"
-                />
-                <label
-                  :for="`filter-${section.id}-${optionIdx}`"
-                  class="ml-3 text-sm text-gray-600"
-                  >{{ option.label }}</label
-                >
               </div>
             </div>
           </HeadlessDisclosurePanel>
@@ -81,8 +62,23 @@
 </template>
 <script setup lang="ts">
 const filters = useFilterOption();
+const hotelStore = useHotelStore();
 
-const categoryCity = ref<string[]>([]);
-const categoryHotelService = ref<string[]>([]);
-const categoryRoomService = ref<string[]>([]);
+const category = ref<{
+  [key in "city" | "hotel_service" | "room_service"]: string[];
+}>({
+  city: [],
+  hotel_service: [],
+  room_service: [],
+});
+
+function callTheAlert() {
+  const url = new URL("http://localhost:3000/api/hotels/filter");
+  url.searchParams.append("City", category.value.city.join(","));
+  url.searchParams.append(
+    "hotel_service",
+    category.value.hotel_service.join(",")
+  );
+  hotelStore.fetchFilterHotelData(url.toString());
+}
 </script>

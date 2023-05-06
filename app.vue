@@ -8,6 +8,6 @@
 const hotelStore = useHotelStore();
 
 const { data, pending } = await useAsyncData("hotelSt", () =>
-  hotelStore.fetchHotelData()
+  hotelStore.fetchAllHotelData()
 );
 </script>

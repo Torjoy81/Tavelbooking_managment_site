@@ -1,7 +1,7 @@
 import { Hotel_Service, Room_Facilities } from "@prisma/client";
 
 interface FilterType {
-  id: string;
+  id: "city" | "hotel_service" | "room_service";
   name: string;
   options: {
     value: string;
@@ -29,7 +29,7 @@ export const useFilterOption = () =>
         ],
       },
       {
-        id: "hotel_sevice",
+        id: "hotel_service",
         name: "Hotel Service",
         options: Object.values(Hotel_Service).map((sevice) => ({
           value: sevice,
