@@ -12,10 +12,10 @@
         :value="Value"
         @input="
           filterName === 'city'
-            ? $emit('update:city', [
-                ...city,
-                ($event.target as HTMLInputElement).value,
-              ])
+            ? $emit(
+                'update:city',
+                removeDuplicate(city, ($event.target as HTMLInputElement).value)
+              )
             : filterName === 'hotel_service'
             ? $emit('update:hotel_service', [
                 ...hotel_service,
@@ -73,4 +73,15 @@ defineEmits<{
   (e: "update:room_service", value: string[]): void;
   (e: "checked"): void;
 }>();
+
+function removeDuplicate(item: string[], value: string) {
+  if (item.includes(value)) {
+    const index = item.indexOf(value);
+    if (index > -1) item.splice(index, 1);
+    return item;
+  } else {
+    item.push(value);
+    return item;
+  }
+}
 </script>

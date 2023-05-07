@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout name="cardflexwrap">
+  <NuxtLayout name="flexwrap">
     <template #headerTitle>Our Service</template>
     <template #default>
       <BaseCard

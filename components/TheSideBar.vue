@@ -79,6 +79,8 @@ function callTheAlert() {
     "hotel_service",
     category.value.hotel_service.join(",")
   );
+  console.log(category.value);
+
   hotelStore.fetchFilterHotelData(url.toString());
 }
 </script>

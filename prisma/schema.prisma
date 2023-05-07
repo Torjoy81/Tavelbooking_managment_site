@@ -55,6 +55,7 @@ model Room{
   hotel_id String @db.ObjectId
   hotel Hotel @relation(fields: [hotel_id],references: [id])
   room_service Room_Facilities[]
+  description String?
 }
 
 model Booking{
@@ -91,6 +92,9 @@ enum Room_Facilities{
   TABLE
   SOFA
   VIEW_MOUNTAIN
+  FREE_WIFI
+  PET_ALLOWED
+  HEATING
 }
 
 enum Hotel_Service{

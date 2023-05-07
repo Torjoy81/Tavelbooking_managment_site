@@ -20,6 +20,6 @@ defineProps<{
   name?: string;
   type: string;
   placeholder: string;
-  value: string;
+  value?: string;
 }>();
 </script>
