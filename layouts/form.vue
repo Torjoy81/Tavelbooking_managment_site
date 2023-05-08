@@ -8,9 +8,7 @@
       <div class="md:w-1/2 px-8 md:px-16">
         <slot name="headerForm"></slot>
 
-        <form action="" class="flex flex-col gap-4 mt-4">
-          <slot></slot>
-        </form>
+        <slot></slot>
 
         <div class="mt-6 grid grid-cols-3 items-center text-gray-400">
           <hr class="border-gray-400" />
@@ -46,3 +44,4 @@
     </div>
   </section>
 </template>
+<script setup lang="ts"></script>
