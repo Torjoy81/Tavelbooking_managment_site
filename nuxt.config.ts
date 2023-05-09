@@ -2,7 +2,13 @@
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
-  modules: ["nuxt-headlessui", "nuxt-icon", "@nuxt/image-edge", "@pinia/nuxt"],
+  modules: [
+    "nuxt-headlessui",
+    "nuxt-icon",
+    "@nuxt/image-edge",
+    "@pinia/nuxt",
+    "@nuxtjs/supabase",
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -12,7 +18,17 @@ export default defineNuxtConfig({
   imports: {
     dirs: ["./store"],
   },
-  image: {},
+  image: {
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+      "2xl": 1536,
+    },
+  },
   plugins: ["~/plugins/v-calender.client.ts"],
   pinia: {
     autoImports: ["defineStore"],

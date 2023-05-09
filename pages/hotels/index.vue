@@ -4,8 +4,11 @@
     <div class="flex flex-col">
       <BaseHorizontalCard
         :hotel-title="hotelInfo.hotel_name"
-        :hotel-description="hotelInfo.description"
+        :address="hotelInfo.address"
+        :room="hotelInfo.rooms"
+        :hotel-des="hotelInfo.description"
         v-for="hotelInfo in paginateStore.paginateData"
+        price="150"
         :key="hotelInfo.id"
         class="mb-8"
       />

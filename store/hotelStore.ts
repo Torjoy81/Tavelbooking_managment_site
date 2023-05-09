@@ -1,8 +1,14 @@
-import { Hotel } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+
+type HotelData = Prisma.HotelGetPayload<{
+  include: {
+    rooms: true;
+  };
+}>;
 
 export const useHotelStore = defineStore("Hotels", () => {
-  const hotels = ref<Hotel[]>([]);
-  const filterHotelData = ref<Hotel[]>([]);
+  const hotels = ref<HotelData[]>([]);
+  const filterHotelData = ref<HotelData[]>([]);
 
   async function fetchAllHotelData() {
     const response = await fetch("http://localhost:3000/api/hotels");

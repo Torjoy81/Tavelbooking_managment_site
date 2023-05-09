@@ -1,7 +1,7 @@
-import { Hotel_Service, Room_Facilities } from "@prisma/client";
+import { Hotel_Service, Room_Facilities, Room_Type } from "@prisma/client";
 
 interface FilterType {
-  id: "city" | "hotel_service" | "room_service";
+  id: "city" | "hotel_service" | "room_service" | "room_type";
   name: string;
   options: {
     value: string;
@@ -33,7 +33,16 @@ export const useFilterOption = () =>
         name: "Hotel Service",
         options: Object.values(Hotel_Service).map((sevice) => ({
           value: sevice,
-          label: sevice.charAt(0).toUpperCase() + sevice.slice(1).toLowerCase(),
+          label: sevice.split("_").join(" "),
+          checked: false,
+        })),
+      },
+      {
+        id: "room_type",
+        name: "Room Bed Size",
+        options: Object.values(Room_Type).map((sevice) => ({
+          value: sevice,
+          label: sevice.split("_").join(" "),
           checked: false,
         })),
       },
@@ -42,7 +51,7 @@ export const useFilterOption = () =>
         name: "Room Service",
         options: Object.values(Room_Facilities).map((sevice) => ({
           value: sevice,
-          label: sevice.charAt(0).toUpperCase() + sevice.slice(1).toLowerCase(),
+          label: sevice.split("_").join(" "),
           checked: false,
         })),
       },

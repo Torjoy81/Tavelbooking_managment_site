@@ -48,7 +48,7 @@
       </div>
     </label>
     <label
-      class="mt-px cursor-pointer select-none font-light text-gray-700"
+      class="mt-px cursor-pointer select-none font-light text-gray-700 capitalize"
       :for="id"
     >
       {{ labelName }}
