@@ -1,14 +1,13 @@
 <template>
   <div class="flex justify-center lg:gap-x-10 mt-5">
-    <TheSideBar />
-    <div class="flex flex-col">
+    <div class="flex flex-col items-center">
+      <SearchFilter />
+      <TheSideBar />
+    </div>
+    <div class="flex flex-col items-center">
       <BaseHorizontalCard
-        :hotel-title="hotelInfo.hotel_name"
-        :address="hotelInfo.address"
-        :room="hotelInfo.rooms"
-        :hotel-des="hotelInfo.description"
+        :hotel-data="hotelInfo"
         v-for="hotelInfo in paginateStore.paginateData"
-        price="150"
         :key="hotelInfo.id"
         class="mb-8"
       />

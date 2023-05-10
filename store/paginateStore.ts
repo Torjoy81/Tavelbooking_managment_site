@@ -14,11 +14,6 @@ export const useCurrentPageStore = defineStore("paginate", () => {
     currentPageNumber.value = pageNumber;
   }
 
-  const activeClass = (pageNumber: number) =>
-    pageNumber === currentPageNumber.value
-      ? "mx-1 flex h-9 w-9 items-center justify-center rounded-full bg-pink-500 p-0 text-sm text-white shadow-md transition duration-150 ease-in-out"
-      : "mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300";
-
   const paginateData = computed(() => {
     const startIndex = (currentPageNumber.value - 1) * pageSize.value;
     if (hotelData.filterHotelData.length !== 0) {
@@ -40,6 +35,6 @@ export const useCurrentPageStore = defineStore("paginate", () => {
     handlePageNumber,
     paginateData,
     countPage,
-    activeClass,
+    currentPageNumber,
   };
 });

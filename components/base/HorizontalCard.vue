@@ -9,39 +9,95 @@
       height="100"
     />
 
-    <div class="flex flex-col md:flex-row p-6">
-      <div class="flex-1 w-64">
-        <div class="flex flex-col justify-start">
-          <div>
-            <h5 class="mb-2 text-xl font-medium text-neutral-800">
-              {{ hotelTitle }}
-            </h5>
-            <p class="mb-3 text-xs text-neutral-600">
-              {{ address }}
-            </p>
-          </div>
-          <div class="text-xs leading-tight font-light font-mono line-clamp-3">
-            {{ hotelDes }}
-          </div>
+    <div class="grid grid-cols-3 justify-items-stretch p-3 max-w-screen-md">
+      <div class="col-span-2">
+        <h5 class="mb-2 text-xl font-medium text-neutral-800">
+          {{ hotel_name }}
+        </h5>
+        <p class="mb-3 text-xs text-neutral-600">
+          <Icon name="map:postal-code" />{{ address }}
+        </p>
+        <div class="text-xs font-light font-proza line-clamp-3">
+          {{ description }}
         </div>
+        <ul class="flex gap-x-2">
+          <li
+            class="text-sm text-sky-300"
+            v-for="item in hotel_facilities.slice(0, 2)"
+          >
+            <Icon
+              name="fluent:vehicle-car-parking-16-regular"
+              class="w-4 h-4 mr-1 text-slate-500"
+            />{{
+              item.split("_").join(" ").charAt(0) +
+              item.split("_").join(" ").slice(1).toLowerCase()
+            }}
+          </li>
+        </ul>
       </div>
 
-      <div class="flex-1 w-32 text-center">
+      <div class="col-span-1 justify-self-center text-center mt-4">
+        <div class="mb-4">
+          <span class="w-10 h-10 rounded bg-blue-800 text-white p-1.5 mr-2"
+            >8.1</span
+          >good
+        </div>
         <h3 class="text-base font-semibold font-banner-head">price</h3>
-        <p class="text-sm">{{ price }}</p>
+        <p>
+          {{
+            rooms[0].room_type === "SINGLE_BED"
+              ? rooms[0].pricePerDay +
+                " - " +
+                rooms[rooms.length - 1].pricePerDay
+              : rooms[rooms.length - 1].pricePerDay +
+                " - " +
+                rooms[0].pricePerDay
+          }}
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { Room } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+type HotelData = Prisma.HotelGetPayload<{
+  include: {
+    rooms: true;
+  };
+}>;
 
-defineProps<{
-  hotelTitle: string;
-  address: string;
-  price: string;
-  room: Room[];
-  hotelDes: string;
+const props = defineProps<{
+  hotelData: HotelData;
 }>();
+
+const { address, hotel_name, description, hotel_facilities, rooms } =
+  props.hotelData;
 </script>
+<!-- <div class="flex flex-col justify-start">
+          <div>
+            <h5 class="mb-2 text-xl font-medium text-neutral-800">
+              {{ hotel_name }}
+            </h5>
+            <p class="mb-3 text-xs text-neutral-600">
+              {{ address }}
+            </p>
+          </div>
+          <div class="text-xs font-light font-proza line-clamp-3">
+            {{ description }}
+          </div>
+        </div> -->
+
+<!-- <div class="flex">
+      <ul class="inline">
+        <li
+          class="text-sm text-sky-300"
+          v-for="item in hotel_facilities.slice(0, 2)"
+        >
+          {{
+            item.split("_").join(" ").charAt(0) +
+            item.split("_").join(" ").slice(1).toLowerCase()
+          }}
+        </li>
+      </ul>
+    </div> -->

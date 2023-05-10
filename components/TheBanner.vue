@@ -14,7 +14,7 @@
         <form
           class="flex flex-col md:flex-row gap-2 justify-center items-center"
         >
-          <FormIconInput type="text" placeholder="city">
+          <FormIconInput type="text" placeholder="city" value="city">
             <template #icon>
               <Icon name="ic:round-location-city" class="w-5 h-5" />
             </template>

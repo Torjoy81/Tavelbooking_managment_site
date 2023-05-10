@@ -5,18 +5,21 @@
       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >{{ labelName }}</label
     >
-    <input
-      :type="type"
-      :id="name"
-      :class="erorrActive"
-      @input="
-        $emit('update:modelValue', ($event.target as HTMLInputElement).value)
-      "
-      :value="modelValue"
-    />
-    <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="erorrMsg">
-      <span class="font-medium">Oops!</span> {{ erorrMsg }}
-    </p>
+    <div class="relative">
+      <slot name="front_icon"></slot>
+      <input
+        :type="type"
+        :id="name"
+        :class="erorrActive"
+        @input="
+          $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+        "
+        :value="modelValue"
+      />
+      <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="erorrMsg">
+        <span class="font-medium">Oops!</span> {{ erorrMsg }}
+      </p>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -24,8 +27,8 @@ const props = defineProps<{
   name?: string;
   type: string;
   labelName: string;
-  modelValue: String;
-  erorrMsg: string | Ref<string>;
+  modelValue?: string;
+  erorrMsg?: string | Ref<string>;
 }>();
 defineEmits<{
   (e: "update:modelValue"): void;

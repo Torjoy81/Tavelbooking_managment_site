@@ -1,5 +1,5 @@
 <template>
-  <HeadlessMenu as="div" class="relative inline-block text-left">
+  <HeadlessMenu as="div" class="relative inline-block text-left z-30">
     <HeadlessMenuButton
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg inline-flex p-2.5 max-w-md text-center"
     >
@@ -15,7 +15,7 @@
       leave-to-class="transform scale-95 opacity-0"
     >
       <HeadlessMenuItems
-        class="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="absolute inset-x-0 top-30 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         <div
           class="px-3 py-2"
