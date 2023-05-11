@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-400 rounded bg-purple-300 w-[280px] h-[450px] p-4"
+    class="border border-gray-400 rounded shadow-lg bg-purple-300 w-[280px] h-[450px] p-4"
   >
     <h2 class="font-bold text-2xl text-[#002D74]">Search</h2>
 

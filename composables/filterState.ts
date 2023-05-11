@@ -14,21 +14,6 @@ export const useFilterOption = () =>
   useState<FilterType[]>("filterOption", () => {
     return [
       {
-        id: "city",
-        name: "City",
-        options: [
-          { value: "LONDON", label: "London", checked: false },
-          { value: "BERLIN", label: "Berlin", checked: false },
-          { value: "PARIS", label: "Paris", checked: true },
-          { value: "ISTANBUL", label: "Istanbul", checked: false },
-          { value: "MUNICH", label: "Munich", checked: false },
-          { value: "VENICE", label: "Venice", checked: false },
-          { value: "FLORENCE", label: "Florence", checked: false },
-          { value: "ROME", label: "Rome", checked: false },
-          { value: "LISBON", label: "Lisbon", checked: false },
-        ],
-      },
-      {
         id: "hotel_service",
         name: "Hotel Service",
         options: Object.values(Hotel_Service).map((sevice) => ({

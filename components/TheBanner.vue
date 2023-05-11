@@ -20,9 +20,9 @@
             </template>
           </FormIconInput>
           <VDatePicker
-            v-model.range="range"
-            :masks="masks"
-            :disabled-dates="disabledDates"
+            v-model.range="calenderData.range"
+            :masks="calenderData.masks"
+            :disabled-dates="calenderData.disabledDates"
           >
             <template #default="{ inputValue, inputEvents }">
               <FormIconInput
@@ -60,33 +60,8 @@
 </template>
 <script setup lang="ts">
 import { DatePicker as VDatePicker } from "v-calendar";
-const todayDate = new Date();
 
-const range = ref({
-  start: new Date(
-    todayDate.getFullYear(),
-    todayDate.getMonth(),
-    todayDate.getDate()
-  ),
-  end: new Date(
-    todayDate.getFullYear(),
-    todayDate.getMonth(),
-    todayDate.getDate() + 1
-  ),
-});
-const masks = ref({
-  input: "YYYY-MM-DD",
-});
-const disabledDates = ref([
-  {
-    start: null,
-    end: new Date(
-      todayDate.getFullYear(),
-      todayDate.getMonth(),
-      todayDate.getDate() - 1
-    ),
-  },
-]);
+const calenderData = useCalenderDate();
 
 const windowSc = shallowReactive({
   width: 0,
