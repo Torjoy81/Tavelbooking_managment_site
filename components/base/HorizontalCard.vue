@@ -11,9 +11,14 @@
 
     <div class="grid grid-cols-3 justify-items-stretch p-3 max-w-screen-md">
       <div class="col-span-2">
-        <h5 class="mb-2 text-xl font-medium text-neutral-800">
-          {{ hotel_name }}
-        </h5>
+        <NuxtLink :to="`hotels/${id}`">
+          <h5
+            class="mb-2 text-xl font-medium text-neutral-800 hover:text-blue-600"
+          >
+            {{ hotel_name }}
+          </h5>
+        </NuxtLink>
+
         <p class="mb-3 text-xs text-neutral-600">
           <Icon name="map:postal-code" />{{ address }}
         </p>
@@ -71,7 +76,7 @@ const props = defineProps<{
   hotelData: HotelData;
 }>();
 
-const { address, hotel_name, description, hotel_facilities, rooms } =
+const { address, hotel_name, description, hotel_facilities, rooms, id } =
   props.hotelData;
 </script>
 <!-- <div class="flex flex-col justify-start">

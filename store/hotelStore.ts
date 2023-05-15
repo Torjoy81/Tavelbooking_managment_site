@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-type HotelData = Prisma.HotelGetPayload<{
+export type HotelData = Prisma.HotelGetPayload<{
   include: {
     rooms: true;
   };
