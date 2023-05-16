@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useCurrentPageStore } from "~/store/paginateStore";
+
 
 const paginateStore = useCurrentPageStore();
 </script>
