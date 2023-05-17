@@ -7,9 +7,7 @@
       <div class="font-sans font-light text-2xl mb-2">
         <slot name="cardIcon"></slot> {{ cardTitle }}
       </div>
-      <p class="text-gray-700 text-base">
-        {{ cardBrief }}
-      </p>
+      <slot name="cardBrief"></slot>
     </div>
     <div class="px-6 pt-4 pb-2">
       <!-- <span
@@ -24,7 +22,6 @@
 <script setup lang="ts">
 defineProps<{
   cardTitle: string;
-  cardBrief: string;
 }>();
 
 const slots = useSlots();

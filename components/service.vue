@@ -4,12 +4,16 @@
     <template #default>
       <BaseCard
         :card-title="item.Sname"
-        :card-brief="item.description"
         v-for="(item, index) in sevice"
         :key="index"
       >
         <template #cardIcon>
           <Icon :name="item.icon.name" :class="`text-${item.icon.color}-200`" />
+        </template>
+        <template #cardBrief>
+          <p class="text-gray-700 text-base">
+            {{ item.description }}
+          </p>
         </template>
       </BaseCard>
     </template>
