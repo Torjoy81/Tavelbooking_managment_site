@@ -13,7 +13,7 @@
       class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"
     ></div>
     <div
-      class="absolute inset-0 translate-y-[90%] flex-col justify-start items-center px-5 transition-all duration-500 group-hover:translate-y-[60%]"
+      class="absolute inset-0 translate-y-[90%] flex-col justify-start items-center px-5 transition-all duration-500 md:group-hover:translate-y-[20%] group-hover:translate-y-[10%]"
     >
       <span class="text-xl block mb-5 capitalize text-white"
         ><Icon name="map:postal-code" class="text-white h-6 w-6" />{{

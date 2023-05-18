@@ -32,10 +32,14 @@
       <HeadlessTabPanel>
         <HotelDetailRoom :rooms="hotel.rooms" />
       </HeadlessTabPanel>
-      <HeadlessTabPanel> Content 3 </HeadlessTabPanel>
+
       <HeadlessTabPanel>
         <HotelDetailRoomService :rooms="hotel.rooms" />
       </HeadlessTabPanel>
+      <HeadlessTabPanel>
+        <HotelDetailRules />
+      </HeadlessTabPanel>
+      <HeadlessTabPanel> <HotelDetailAskQuestion /> </HeadlessTabPanel>
     </HeadlessTabPanels>
   </HeadlessTabGroup>
 </template>
@@ -45,9 +49,9 @@ import { Hotel, Room } from "@prisma/client";
 const tabList = ref<string[]>([
   "OverView",
   "Rooms",
-  "Address",
   "Facilities",
   "Hotel Rule",
+  "Q&A",
 ]);
 
 const { hotel } = defineProps<{

@@ -6,7 +6,7 @@
       <slot name="headerTitle"></slot>
     </h1>
     <div class="py-12 px-6">
-      <div class="flex gap-x-10 justify-center">
+      <div class="flex flex-col md:flex-row gap-x-10 justify-center">
         <slot></slot>
       </div>
     </div>
