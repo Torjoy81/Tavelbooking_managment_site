@@ -14,11 +14,7 @@
         <form
           class="flex flex-col md:flex-row gap-2 justify-center items-center"
         >
-          <FormIconInput type="text" placeholder="city" value="city">
-            <template #icon>
-              <Icon name="ic:round-location-city" class="w-5 h-5" />
-            </template>
-          </FormIconInput>
+          <AutoCompleteBox :prop-value="autoCompleteProps" />
           <VDatePicker
             v-model.range="calenderData.range"
             :masks="calenderData.masks"
@@ -76,4 +72,8 @@ onBeforeMount(() => {
 onMounted(() => {
   windowSc.width = window.innerWidth;
 });
+
+const hotelsData = useHotelStore();
+
+const autoCompleteProps = hotelsData.getCity;
 </script>

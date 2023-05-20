@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import _ from "lodash";
 
 type HotelData = Prisma.HotelGetPayload<{
   include: {
@@ -9,6 +10,16 @@ type HotelData = Prisma.HotelGetPayload<{
 export const useHotelStore = defineStore("Hotels", () => {
   const hotels = ref<HotelData[]>([]);
   const filterHotelData = ref<HotelData[]>([]);
+
+  const getCity = computed(() => {
+    const cityArray = hotels.value.map((hotel) => {
+      return {
+        id: hotel.id,
+        value: hotel.city,
+      };
+    });
+    return _.uniqBy(cityArray, "value");
+  });
 
   async function fetchAllHotelData() {
     const response = await fetch("http://localhost:3000/api/hotels");
@@ -31,5 +42,6 @@ export const useHotelStore = defineStore("Hotels", () => {
     fetchAllHotelData,
     filterHotelData,
     fetchFilterHotelData,
+    getCity,
   };
 });

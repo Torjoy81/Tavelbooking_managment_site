@@ -5,15 +5,7 @@
     <h2 class="font-bold text-2xl text-[#002D74]">Search</h2>
 
     <form action="">
-      <FormTextInput type="text" label-name="Destination/City" v-model="city">
-        <template #front_icon>
-          <div
-            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
-          >
-            <Icon name="ic:baseline-search" class="w-5 h-5" />
-          </div>
-        </template>
-      </FormTextInput>
+      <AutoCompleteBox :prop-value="autoCompleteProps" />
       <VDatePicker
         v-model.range="calenderData.range"
         :masks="calenderData.masks"
@@ -71,6 +63,11 @@
 
 <script setup lang="ts">
 import { DatePicker as VDatePicker } from "v-calendar";
+
 const city = ref<string>("");
 const calenderData = useCalenderDate();
+
+const hotelsData = useHotelStore();
+
+const autoCompleteProps = hotelsData.getCity;
 </script>
