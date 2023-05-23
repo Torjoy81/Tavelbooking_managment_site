@@ -1,5 +1,5 @@
 <template>
-  <HeadlessCombobox v-model="selected">
+  <HeadlessCombobox v-model="selected" default-value="ALL">
     <div class="relative mt-1">
       <div
         class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
@@ -37,7 +37,7 @@
           </div>
           <HeadlessComboboxOption
             v-for="propItem in filterValue"
-            as="template"
+            as="ul"
             :key="propItem.id"
             :value="propItem"
             v-slot="{ selected, active }"
@@ -48,6 +48,7 @@
                 'bg-teal-600 text-white': active,
                 'text-gray-900': !active,
               }"
+              @click="(e) => getCity(e)"
             >
               <span
                 class="block truncate"
@@ -96,4 +97,10 @@ let filterValue = computed(() =>
           .includes(query.value.toLowerCase().replace(/\s+/g, ""))
       )
 );
+
+const emit = defineEmits(["passcity"]);
+
+const getCity = (event: Event) => {
+  emit("passcity", { city: (<HTMLElement>event.target).textContent });
+};
 </script>

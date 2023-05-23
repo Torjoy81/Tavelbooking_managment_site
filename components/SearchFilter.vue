@@ -5,7 +5,7 @@
     <h2 class="font-bold text-2xl text-[#002D74]">Search</h2>
 
     <form action="">
-      <AutoCompleteBox :prop-value="autoCompleteProps" />
+      <AutoCompleteBox :prop-value="autoCompleteProps" @passcity="sendCity" />
       <VDatePicker
         v-model.range="calenderData.range"
         :masks="calenderData.masks"
@@ -70,4 +70,10 @@ const calenderData = useCalenderDate();
 const hotelsData = useHotelStore();
 
 const autoCompleteProps = hotelsData.getCity;
+
+const emit = defineEmits(["passToParent"]);
+
+function sendCity(city: string) {
+  emit("passToParent", city);
+}
 </script>

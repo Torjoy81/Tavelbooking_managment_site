@@ -31,13 +31,16 @@
                 id="labelAdult"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg p-2.5 w-28 flex justify-between"
               >
-                <button @click.prevent="addAdult">+</button
+                <button @click.prevent="addAdult(folk)">+</button
                 ><span>{{ people[folk] }}</span
-                ><button>-</button>
+                ><button @click.prevent="subTrack(folk)">-</button>
               </div>
             </div>
           </HeadlessMenuItem>
         </div>
+        <HeadlessMenuItem class="m-3 flex justify-center" as="div"
+          ><BaseButton button-name="Done" variant="solid"
+        /></HeadlessMenuItem>
       </HeadlessMenuItems>
     </transition>
   </HeadlessMenu>
@@ -51,7 +54,10 @@ const people = ref<{
   rooms: 0,
 });
 
-function addAdult() {
-  return people.value.adult++;
+function addAdult(categoryPeople: string) {
+  return people.value[categoryPeople]++;
+}
+function subTrack(categoryPeople: string) {
+  return people.value[categoryPeople]--;
 }
 </script>

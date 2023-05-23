@@ -18,7 +18,8 @@ export const useHotelStore = defineStore("Hotels", () => {
         value: hotel.city,
       };
     });
-    return _.uniqBy(cityArray, "value");
+    const uniq_City = _.uniqBy(cityArray, "value");
+    return [{ id: "All", value: "ALL" }, ...uniq_City];
   });
 
   async function fetchAllHotelData() {
@@ -29,10 +30,12 @@ export const useHotelStore = defineStore("Hotels", () => {
     }
   }
 
-  async function fetchFilterHotelData(url: string) {
-    const response = await fetch(url);
-    filterHotelData.value = await response.json();
-    if (response.ok) {
+  async function fetchFilterHotelData(data: any) {
+    filterHotelData.value = data.value.filter(
+      (item: HotelData) => item.rooms.length !== 0
+    );
+
+    if (data) {
       return "success";
     }
   }

@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/image-edge",
     "@pinia/nuxt",
     "@nuxtjs/supabase",
+    "@vueuse/nuxt",
   ],
   postcss: {
     plugins: {

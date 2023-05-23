@@ -23,15 +23,6 @@ export const useFilterOption = () =>
         })),
       },
       {
-        id: "room_type",
-        name: "Room Bed Size",
-        options: Object.values(Room_Type).map((sevice) => ({
-          value: sevice,
-          label: sevice.split("_").join(" "),
-          checked: false,
-        })),
-      },
-      {
         id: "room_service",
         name: "Room Service",
         options: Object.values(Room_Facilities).map((sevice) => ({
