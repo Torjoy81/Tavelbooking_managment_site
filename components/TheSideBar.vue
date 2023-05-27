@@ -1,73 +1,54 @@
 <template>
-  <section aria-labelledby="products-heading" class="pb-24 pt-6">
-    <h2 id="products-heading" class="sr-only">Products</h2>
-
-    <div class="">
-      <!-- Filters -->
-      <form class="hidden lg:block">
-        <h3 class="sr-only">Categories</h3>
-
-        <HeadlessDisclosure
-          as="div"
-          v-for="section in filters"
-          :key="section.id"
-          class="border-b border-gray-200 py-6"
-          v-slot="{ open }"
+  <div>
+    <ul class="my-3" v-for="(section, index) in filters">
+      <li class="border p-4 shadow-lg bg-gray-200 rounded w-[280px]">
+        <button
+          type="button"
+          class="py-2 px-6 mb-2 flex bg-white rounded-lg items-center w-full text-left font-bold"
+          @click.prevent="OnClick(section.name)"
         >
-          <h3 class="-my-3 flow-root">
-            <HeadlessDisclosureButton
-              class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
-            >
-              <span class="font-medium text-gray-900">{{ section.name }}</span>
-              <span class="ml-6 flex items-center">
-                <Icon
-                  name="material-symbols:add"
-                  v-if="!open"
-                  class="h-5 w-5"
-                  aria-hidden="true"
-                />
-                <Icon
-                  name="ri:subtract-fill"
-                  v-else
-                  class="h-5 w-5"
-                  aria-hidden="true"
-                />
-              </span>
-            </HeadlessDisclosureButton>
-          </h3>
-          <KeepAlive>
-            <HeadlessDisclosurePanel class="pt-6 space-y-4" as="div">
-              <div
-                v-for="(option, optionIdx) in section.options"
-                :key="option.value"
-                class="flex items-center"
-              >
-                <FormCheckBox
-                  :id="`filter-${section.id}-${optionIdx}`"
-                  :label-name="option.label"
-                  :Value="option.value"
-                  v-model:hotel_service="category.hotel_service"
-                  v-model:room_service="category.room_service"
-                  :filter-name="section.id"
-                  @checked="
-                    $emit('sendUrlData', [
-                      category.hotel_service,
-                      category.room_service,
-                    ])
-                  "
-                />
-              </div>
-            </HeadlessDisclosurePanel>
-          </KeepAlive>
-        </HeadlessDisclosure>
+          <div class="flex w-full justify-between items-center">
+            <span>{{ section.name }}</span>
+            <span>+</span>
+          </div>
+        </button>
 
-        <FormMutipleRanger />
-      </form>
-    </div>
-  </section>
+        <TransitionGroup name="service" tag="div">
+          <FormCheckBox
+            v-for="option in section.options"
+            v-if="showBody.hotel_service && section.name === 'Hotel Service'"
+            :key="`${section.id}-${option.label}`"
+            :label-name="option.label"
+            :Value="option.value"
+            :id="`${section.id}-${option.label}`"
+            :name-ofsection="section.id"
+            :checked="option.checked"
+            @update-checkbox="update_CheckValue"
+            :modal-value="category.hotel_service"
+          />
+        </TransitionGroup>
+        <TransitionGroup name="service" tag="div">
+          <FormCheckBox
+            v-if="showBody.room_service && section.name === 'Room Service'"
+            v-for="option in section.options"
+            :key="`${section.id}-${option.label}`"
+            :label-name="option.label"
+            :Value="option.value"
+            :id="`${section.id}-${option.label}`"
+            :name-ofsection="section.id"
+            :checked="option.checked"
+            @update-checkbox="update_CheckValue"
+            :modal-value="category.room_service"
+          />
+        </TransitionGroup>
+      </li>
+    </ul>
+  </div>
 </template>
 <script setup lang="ts">
-const filters = useFilterOption();
+import { useFilterOption } from "./../composables/filterState";
+
+let filters = useFilterOption;
 
 const category = ref<{
   [key in "hotel_service" | "room_service"]: string[];
@@ -76,11 +57,69 @@ const category = ref<{
   room_service: [],
 });
 
-defineEmits<{
-  (e: "sendUrlData", value: { [key: string]: string[] }[]): void;
+function update_CheckValue(item: any) {
+  if (item.id === "hotel_service") {
+    category.value.hotel_service = item.value;
+    item.value.forEach((checkService: any) => {
+      for (const i in filters[0].options) {
+        if (filters[0].options[i].value === checkService) {
+          filters[0].options[i].checked = true;
+        } else {
+          filters[0].options[i].checked = false;
+        }
+      }
+    });
+    emit("sendUrlData", {
+      hotel_service: category.value.hotel_service,
+      room_service: category.value.room_service,
+    });
+  } else {
+    category.value.room_service = item.value;
+    item.value.forEach((checkService: any) => {
+      for (const i in filters[0].options) {
+        if (filters[1].options[i].value === checkService) {
+          filters[1].options[i].checked = true;
+        } else {
+          filters[1].options[i].checked = false;
+        }
+      }
+    });
+    emit("sendUrlData", {
+      hotel_service: category.value.hotel_service,
+      room_service: category.value.room_service,
+    });
+  }
+}
+
+const emit = defineEmits<{
+  (e: "sendUrlData", value: { [key: string]: string[] }): void;
 }>();
 
-onActivated(() => {
-  console.log("Tarek");
+const showBody = ref({
+  hotel_service: false,
+  room_service: false,
 });
+
+function OnClick(selectedName: string) {
+  if (selectedName === "Hotel Service") {
+    showBody.value.hotel_service = !showBody.value.hotel_service;
+  } else {
+    showBody.value.room_service = !showBody.value.room_service;
+  }
+}
 </script>
+
+<style scoped>
+.service-enter-active,
+.service-leave-active {
+  transition: all ease-out 1s;
+}
+.service-enter-from {
+  transform: translateY(100px);
+  opacity: 0;
+}
+.service-leave-to {
+  transform: scale3d(1.5);
+  opacity: 0;
+}
+</style>

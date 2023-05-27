@@ -7,13 +7,17 @@
       ></template
     >
     <template #card>
-      <BaseImageHover
-        :imagesrc="palace.imagesrc"
-        :city="palace.city"
-        :description="palace.description"
+      <NuxtLink
+        :to="`/hotels?city=${palace.city.toUpperCase()}`"
         v-for="(palace, index) in destinatonData"
         :key="index"
-      />
+      >
+        <BaseImageHover
+          :imagesrc="palace.imagesrc"
+          :city="palace.city"
+          :description="palace.description"
+        />
+      </NuxtLink>
     </template>
   </NuxtLayout>
 </template>

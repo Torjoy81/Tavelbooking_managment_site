@@ -5,13 +5,7 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
-  if (
-    (query.city === "ALL" || query.city === "") &&
-    query.hotel_service &&
-    query.room_service
-  ) {
-    console.log("exam1");
-
+  if (query.hotel_service && query.room_service) {
     return await prisma.hotel.findMany({
       include: {
         rooms: {
@@ -28,12 +22,7 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
-  } else if (
-    (query.city === "ALL" || query.city === "") &&
-    query.hotel_service
-  ) {
-    console.log("exam2");
-
+  } else if (query.hotel_service) {
     return await prisma.hotel.findMany({
       include: {
         rooms: true,
@@ -45,11 +34,10 @@ export default defineEventHandler(async (event) => {
       },
     });
   } else if (query.city !== "ALL") {
-    console.log("exam3");
-
+    console.log("Ta");
     return await prisma.hotel.findMany({
       where: {
-        city: { in: query.city as string },
+        city: { in: <string>query.city },
       },
       include: {
         rooms: true,

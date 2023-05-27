@@ -1,77 +1,37 @@
 <template>
-  <div class="inline-flex items-center">
-    <label
-      class="relative flex cursor-pointer items-center rounded-full p-3"
-      :for="id"
-      data-ripple-dark="true"
-    >
+  <KeepAlive>
+    <div class="flex items-center mb-4">
       <input
         :id="id"
         type="checkbox"
-        class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-pink-500 checked:bg-pink-500 checked:before:bg-pink-500 hover:before:opacity-10"
         :value="Value"
-        @input="
-          filterName === 'hotel_service'
-            ? $emit(
-                'update:hotel_service',
-                removeDuplicate(
-                  hotel_service,
-                  ($event.target as HTMLInputElement).value
-                )
-              )
-            : $emit(
-                'update:room_service',
-                removeDuplicate(
-                  room_service,
-                  ($event.target as HTMLInputElement).value
-                )
-              )
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+        :checked="checked"
+        @change="
+          $emit('updateCheckbox', {
+            id: nameOfsection,
+            value: removeDuplicate(
+              modalValue,
+              ($event.target as HTMLInputElement).value
+            ),
+          })
         "
-        @change="$emit('checked')"
       />
-      <div
-        class="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-3.5 w-3.5"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          stroke="currentColor"
-          stroke-width="1"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-            clip-rule="evenodd"
-          ></path>
-        </svg>
-      </div>
-    </label>
-    <label
-      class="mt-px cursor-pointer select-none font-light text-gray-700 capitalize"
-      :for="id"
-    >
-      {{ labelName }}
-    </label>
-  </div>
+      <label :for="id" class="ml-2 text-sm font-medium text-gray-900">{{
+        labelName
+      }}</label>
+    </div>
+  </KeepAlive>
 </template>
 
 <script setup lang="ts">
 defineProps<{
   labelName: string;
-  Value: string;
+  modalValue: string[];
   id: string;
-
-  hotel_service: string[];
-  room_service: string[];
-  filterName: string;
-}>();
-
-defineEmits<{
-  (e: "update:hotel_service", value: string[]): void;
-  (e: "update:room_service", value: string[]): void;
-  (e: "checked"): void;
+  checked: boolean;
+  Value: string;
+  nameOfsection: string;
 }>();
 
 function removeDuplicate(item: string[], value: string) {
@@ -84,4 +44,24 @@ function removeDuplicate(item: string[], value: string) {
     return item;
   }
 }
+
+defineEmits<{
+  (e: "updateCheckbox", value: string[]): void;
+}>();
 </script>
+
+<!-- @change="$emit(
+              'update:hotel_service',
+              removeDuplicate(
+                modalValue,
+                ($event.target as HTMLInputElement).value
+              )
+            )" -->
+
+<!-- 
+
+defineEmits<{
+  (e: "update:modalValue", value: string[]): void;
+
+  (e: "checked"): void;
+}>(); -->

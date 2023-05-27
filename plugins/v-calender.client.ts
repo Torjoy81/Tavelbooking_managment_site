@@ -1,6 +1,5 @@
-import VCalendar from "v-calendar";
-import "v-calendar/style.css";
+import { setupCalendar } from "v-calendar";
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(VCalendar, {});
+  nuxtApp.vueApp.use(setupCalendar, {});
 });

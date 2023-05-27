@@ -1,32 +1,37 @@
 const todayDate = new Date();
 
-export const useCalenderDate = () =>
-  useState(() => {
-    return {
-      range: {
-        start: new Date(
-          todayDate.getFullYear(),
-          todayDate.getMonth(),
-          todayDate.getDate()
-        ),
-        end: new Date(
-          todayDate.getFullYear(),
-          todayDate.getMonth(),
-          todayDate.getDate() + 1
-        ),
-      },
-      masks: {
-        input: "YYYY-MM-DD",
-      },
-      disabledDates: [
-        {
-          start: null,
-          end: new Date(
-            todayDate.getFullYear(),
-            todayDate.getMonth(),
-            todayDate.getDate() - 1
-          ),
-        },
-      ],
-    };
+export const useCalenderDate = () => {
+  const range = reactive({
+    start: new Date(
+      todayDate.getFullYear(),
+      todayDate.getMonth(),
+      todayDate.getDate()
+    ),
+    end: new Date(
+      todayDate.getFullYear(),
+      todayDate.getMonth(),
+      todayDate.getDate() + 1
+    ),
   });
+
+  const masks = reactive({
+    input: "YYYY-MM-DD",
+  });
+
+  const disabledDates = reactive([
+    {
+      start: null,
+      end: new Date(
+        todayDate.getFullYear(),
+        todayDate.getMonth(),
+        todayDate.getDate() - 1
+      ),
+    },
+  ]);
+
+  return {
+    range,
+    masks,
+    disabledDates,
+  };
+};

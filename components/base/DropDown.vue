@@ -1,12 +1,12 @@
 <template>
-  <HeadlessMenu as="div" class="relative inline-block text-left z-30">
+  <HeadlessMenu as="div" class="relative inline-block text-left">
     <HeadlessMenuButton
       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg inline-flex p-2.5 max-w-md text-center"
     >
       <Icon name="memory:account" class="w-6 h-6" /> {{ people.adult }} Adult .
       {{ people.children }} Children . {{ people.rooms }} Rooms
     </HeadlessMenuButton>
-    <transition
+    <Transition
       enter-active-class="transition duration-100 ease-out"
       enter-from-class="transform scale-95 opacity-0"
       enter-to-class="transform scale-100 opacity-100"
@@ -42,7 +42,7 @@
           ><BaseButton button-name="Done" variant="solid"
         /></HeadlessMenuItem>
       </HeadlessMenuItems>
-    </transition>
+    </Transition>
   </HeadlessMenu>
 </template>
 <script setup lang="ts">

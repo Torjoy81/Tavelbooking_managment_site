@@ -1,13 +1,12 @@
 <template>
-  <HeadlessCombobox v-model="selected" default-value="ALL">
+  <HeadlessCombobox v-model="selectedCity" default-value="ALL">
     <div class="relative mt-1">
       <div
         class="relative w-full cursor-default rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm"
       >
         <HeadlessComboboxInput
           class="w-full border-none rounded py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-          aria-placeholder="city"
-          :displayValue="(item:any)=>item.value"
+          :displayValue="(item:any)=> item.value"
           @change="query = $event.target.value"
         />
 
@@ -48,7 +47,6 @@
                 'bg-teal-600 text-white': active,
                 'text-gray-900': !active,
               }"
-              @click="(e) => getCity(e)"
             >
               <span
                 class="block truncate"
@@ -79,12 +77,19 @@ type AutoCompleteType = {
   id: string | number;
   value: string;
 };
+const route = useRoute();
 
 const { propValue } = defineProps<{
   propValue: AutoCompleteType[];
 }>();
 
-let selected = ref(propValue[0]);
+let selectedCity = route.query.city
+  ? ref(
+      propValue[
+        useIndexOfObject_Array(propValue, route.query.city.toString(), "value")
+      ]
+    )
+  : ref(propValue[0]);
 let query = ref("");
 
 let filterValue = computed(() =>
@@ -100,7 +105,9 @@ let filterValue = computed(() =>
 
 const emit = defineEmits(["passcity"]);
 
-const getCity = (event: Event) => {
-  emit("passcity", { city: (<HTMLElement>event.target).textContent });
-};
+watch(selectedCity, (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    emit("passcity", { city: newValue.value });
+  }
+});
 </script>

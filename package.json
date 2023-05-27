@@ -22,12 +22,11 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.9",
-    "@popperjs/core": "^2.11.7",
+    "@popperjs/core": "^2.11.8",
     "@prisma/client": "4.13.0",
     "@types/lodash": "^4.14.194",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
-    "argon2": "^0.30.3",
     "nuxt-headlessui": "^1.1.4",
     "pinia": "^2.0.35",
     "prisma": "^4.14.0",
