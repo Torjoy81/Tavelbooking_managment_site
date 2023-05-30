@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxtjs/supabase",
     "@vueuse/nuxt",
+    "nuxt-swiper",
   ],
   postcss: {
     plugins: {

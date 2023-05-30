@@ -67,10 +67,10 @@ const hotelsData = useHotelStore();
 
 const autoCompleteProps = hotelsData.getCity;
 
-const emit = defineEmits(["passToParent"]);
+const emit = defineEmits(["update:cityValue", "update:dayDiff"]);
 
 function sendCity(city: string) {
-  emit("passToParent", city);
+  emit("update:cityValue", city);
 }
 
 const todayDate = new Date();
@@ -102,4 +102,21 @@ const disabledDates = ref([
     ),
   },
 ]);
+
+const diffDays = ref(0);
+
+watch(range, (newRange, oldRange) => {
+  if (newRange.end !== oldRange.end) {
+    const diffTime = Math.abs(
+      newRange.end.getTime() - newRange.start.getTime()
+    );
+    diffDays.value = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    emit("update:dayDiff", diffDays.value);
+  }
+});
+
+defineProps<{
+  dayDiff: number;
+  cityValue: string;
+}>();
 </script>

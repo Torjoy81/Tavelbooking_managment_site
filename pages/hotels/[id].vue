@@ -1,14 +1,15 @@
 <template>
   <div class="flex flex-row justify-center gap-4">
-    <SearchFilter />
+    <SearchFilter v-model:day-diff="totalDay" />
     <div class="flex flex-col">
-      <ImageGrid />
+      <ImageGrid :id="<string>route.params.id" />
       <TabMenu :hotel="hotelData" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 const hotelsData = useHotelStore();
+const totalDay = ref(0);
 
 const route = useRoute();
 

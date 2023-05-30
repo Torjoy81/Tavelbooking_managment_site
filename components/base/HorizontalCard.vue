@@ -47,18 +47,39 @@
             >8.1</span
           >good
         </div>
-        <h3 class="text-base font-semibold font-banner-head">price</h3>
-        <p>
+        <h3 class="text-base font-semibold font-banner-head">
           {{
-            rooms[0].room_type === "SINGLE_BED"
-              ? rooms[0].pricePerDay +
-                " - " +
-                rooms[rooms.length - 1].pricePerDay
-              : rooms[rooms.length - 1].pricePerDay +
-                " - " +
-                rooms[0].pricePerDay
+            totalDayDiff !== 0
+              ? `Price for ${totalDayDiff} days`
+              : "Price for room"
           }}
-        </p>
+        </h3>
+        <div
+          v-if="!totalDayDiff"
+          v-for="room in rooms"
+          class="text-xs font-semibold"
+        >
+          <p v-if="room.room_type === 'SINGLE_BED'">
+            {{ "SINGLE BED: " + room.pricePerDay }}
+          </p>
+          <p v-else-if="room.room_type === 'DOUBLE_BED'">
+            {{ "DOUBLE BED: " + room.pricePerDay }}
+          </p>
+          <p v-else>
+            {{ "KINGSIZE BED: " + room.pricePerDay }}
+          </p>
+        </div>
+        <div v-else class="text-xs font-semibold" v-for="room in rooms">
+          <p v-if="room.room_type === 'SINGLE_BED'">
+            {{ "SINGLE BED: " + room.pricePerDay * totalDayDiff + "€" }}
+          </p>
+          <p v-else-if="room.room_type === 'DOUBLE_BED'">
+            {{ "DOUBLE BED: " + room.pricePerDay * totalDayDiff + "€" }}
+          </p>
+          <p v-else>
+            {{ "KINGSIZE BED: " + room.pricePerDay * totalDayDiff + "€" }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +95,7 @@ type HotelData = Prisma.HotelGetPayload<{
 
 const props = defineProps<{
   hotelData: HotelData;
+  totalDayDiff?: number;
 }>();
 
 const { address, hotel_name, description, hotel_facilities, rooms, id } =

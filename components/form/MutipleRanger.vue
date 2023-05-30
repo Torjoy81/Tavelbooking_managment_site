@@ -1,7 +1,7 @@
 <template>
   <div class="relative my-6">
     <div
-      class="h-1.5 w-full overflow-hidden rounded-sm bg-gray-300 font-sans text-xs font-medium"
+      class="h-1.5 w-[280px] overflow-hidden rounded-sm bg-gray-300 font-sans text-xs font-medium"
     >
       <div
         :class="['absolute', 'h-full  overflow-hidden  bg-pink-500 ']"
@@ -56,6 +56,8 @@ function leftInput(e: Event) {
     rangeStyle.minPercentage =
       (inputRange.currentMinValue / inputRange.maxValue) * 100;
   }
+  emit("update:maxprice", inputRange.currentMaxValue);
+  emit("update:minprice", inputRange.currentMinValue);
 }
 
 function rightInput(e: Event) {
@@ -65,7 +67,16 @@ function rightInput(e: Event) {
     rangeStyle.maxPercentage =
       100 - (inputRange.currentMaxValue / inputRange.maxValue) * 100;
   }
+  emit("update:maxprice", inputRange.currentMaxValue);
+  emit("update:minprice", inputRange.currentMinValue);
 }
+
+const emit = defineEmits(["update:minprice", "update:maxprice"]);
+
+defineProps<{
+  minprice: number;
+  maxprice: number;
+}>();
 </script>
 <style scoped>
 input {

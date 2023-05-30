@@ -69,10 +69,8 @@ function update_CheckValue(item: any) {
         }
       }
     });
-    emit("sendUrlData", {
-      hotel_service: category.value.hotel_service,
-      room_service: category.value.room_service,
-    });
+    emit("update:hotel_service", category.value.hotel_service),
+      emit("update:room_service", category.value.room_service);
   } else {
     category.value.room_service = item.value;
     item.value.forEach((checkService: any) => {
@@ -84,15 +82,16 @@ function update_CheckValue(item: any) {
         }
       }
     });
-    emit("sendUrlData", {
-      hotel_service: category.value.hotel_service,
-      room_service: category.value.room_service,
-    });
+    emit("update:hotel_service", category.value.hotel_service),
+      emit("update:room_service", category.value.room_service);
   }
 }
 
-const emit = defineEmits<{
-  (e: "sendUrlData", value: { [key: string]: string[] }): void;
+const emit = defineEmits(["update:hotel_service", "update:room_service"]);
+
+defineProps<{
+  hotel_service: string[];
+  room_service: string[];
 }>();
 
 const showBody = ref({

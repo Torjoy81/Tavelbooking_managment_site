@@ -1,53 +1,46 @@
-import { PrismaClient, Hotel_Service, Room_Facilities } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { Hotel_Service, Room_Facilities } from "@prisma/client";
+import {
+  useFilterAllService,
+  useFilterByCity,
+  useFilterByHotelService,
+  useFilterByPrice,
+  useFilterByRoomService,
+  useFilterForALLCity,
+  useFilterServices_price,
+} from "~/server/db/configDB";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
-  if (query.hotel_service && query.room_service) {
-    return await prisma.hotel.findMany({
-      include: {
-        rooms: {
-          where: {
-            room_service: {
-              hasEvery: <Room_Facilities[]>query.room_service,
-            },
-          },
-        },
-      },
-      where: {
-        hotel_facilities: {
-          hasEvery: <Hotel_Service[]>query.hotel_service,
-        },
-      },
-    });
+  if (query.city && query.city !== "ALL") {
+    return await useFilterByCity(<string>query.city);
   } else if (query.hotel_service) {
-    return await prisma.hotel.findMany({
-      include: {
-        rooms: true,
-      },
-      where: {
-        hotel_facilities: {
-          hasEvery: <Hotel_Service[]>query.hotel_service,
-        },
-      },
-    });
-  } else if (query.city !== "ALL") {
-    console.log("Ta");
-    return await prisma.hotel.findMany({
-      where: {
-        city: { in: <string>query.city },
-      },
-      include: {
-        rooms: true,
-      },
-    });
+    return await useFilterByHotelService(<Hotel_Service[]>query.hotel_service);
+  } else if (query.room_service) {
+    return await useFilterByRoomService(<Room_Facilities[]>query.room_service);
+  } else if (query.minprice && query.maxprice) {
+    return await useFilterByPrice(
+      parseFloat(query.minprice.toString()),
+      parseFloat(query.maxprice.toString())
+    );
+  } else if (query.hotel_service && query.room_service) {
+    return await useFilterAllService(
+      query.hotel_service as unknown as Hotel_Service[],
+      query.room_serviceas as unknown as Room_Facilities[]
+    );
+  } else if (
+    query.hotel_service &&
+    query.room_service &&
+    query.minprice &&
+    query.maxprice
+  ) {
+    return await useFilterServices_price(
+      <number>query.minprice,
+      <number>query.maxprice,
+      query.hotel_service as unknown as Hotel_Service[],
+      query.room_service as unknown as Room_Facilities[]
+    );
   } else {
-    return await prisma.hotel.findMany({
-      include: {
-        rooms: true,
-      },
-    });
+    return await useFilterForALLCity();
   }
 });
