@@ -15,12 +15,14 @@
       />
     </div>
     <div class="flex flex-col items-center">
+      <BaseSpinner v-if="loading" />
       <BaseHorizontalCard
         :hotel-data="hotelInfo"
         v-for="hotelInfo in paginateStore.paginateData"
         :key="hotelInfo.id"
         class="mb-8"
         :total-day-diff="filterQuery.totalDay"
+        v-else
       />
       <BasePagination />
     </div>
@@ -34,51 +36,42 @@ const filterQuery = reactive({
   minPrice: 0,
   maxPrice: 0,
   totalDay: 0,
-  city: "",
+  city: "ALL",
   hotel_service: [],
   room_service: [],
 });
 
 const route = useRoute();
 
-watch(
-  () => [
-    filterQuery.city,
-    filterQuery.hotel_service,
-    filterQuery.minPrice,
-    filterQuery.maxPrice,
-  ],
-  () => {
-    console.log(filterQuery.maxPrice);
-    console.log(filterQuery.minPrice);
+const loading = ref(false);
+
+watch(filterQuery, async () => {
+  const queryValue = {
+    city: filterQuery.city,
+    hotel_service: filterQuery.hotel_service,
+    room_service: filterQuery.room_service,
+    minprice: filterQuery.minPrice,
+    maxprice: filterQuery.maxPrice,
+  };
+
+  if (filterQuery.city === "ALL") {
+    const { data, pending, error } = await useFetch("/api/hotels/filterAll", {
+      query: queryValue,
+    });
+    loading.value = pending.value;
+    console.log(data.value);
+
+    HotelData.fetchFilterHotelData(data);
+  } else {
+    const { data, pending, error } = await useFetch("/api/hotels/filterAcity", {
+      query: queryValue,
+    });
+    console.log(data.value);
+    loading.value = pending.value;
+
+    if (!pending.value) {
+      HotelData.fetchFilterHotelData(data);
+    }
   }
-);
-
-// if (route.path === "/hotels" && route.query.city !== undefined) {
-//   await apiCallForCity({ city: route.query.city?.toString() });
-// }
-
-// async function apiCallForCity(ValueOfCity: any) {
-//   const { data, pending, error } = await useFetch("/api/hotels/filter", {
-//     query: ValueOfCity,
-//   });
-//   if (!pending.value) {
-//     HotelData.fetchFilterHotelData(data);
-//   }
-// }
-
-// async function apiCallForService(item: { [key: string]: string[] }) {
-//   const { data, pending } = await useFetch("/api/hotels/filter", {
-//     query: item,
-//   });
-
-//   HotelData.fetchFilterHotelData(data);
-// }
-// async function apiCallForPrice(price: number[]) {
-//   const { data, pending } = await useFetch("/api/hotels/filter", {
-//     query: { minprice: price[1], maxprice: price[0] },
-//   });
-
-//   HotelData.fetchFilterHotelData(data);
-// }
+});
 </script>

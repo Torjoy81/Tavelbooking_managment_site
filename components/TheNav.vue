@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex flex-wrap justify-between items-center py-8 px-6 mx-auto max-w-screen-xl md:px-12 lg:px-16 xl:px-24"
+    class="absolute w-full flex flex-wrap justify-between items-center py-8 px-6 mx-auto md:px-12 lg:px-16 xl:px-24"
   >
     <a href="#" class="text-3xl md:text-4xl font-bold tracking-wide">
       <span class="text-orange-300">Easy</span
@@ -8,11 +8,11 @@
       ><span class="text-purple-600" v-else>Booking</span>
     </a>
     <div
-      class="transition-all md:static md:flex items-center justify-center space-y-8 md:space-y-0 md:space-x-8 flex-col md:flex-row lg:space-x-14"
+      class="inset-0 transition-all bg-white/70 backdrop-blur-xl z-20 md:static md:flex md:bg-transparent items-center justify-center lg:justify-end space-y-8 md:space-y-0 md:space-x-8 flex-col md:flex-row lg:space-x-14"
       :class="sidebarOpen ? 'fixed flex' : 'hidden'"
     >
       <ul
-        class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 lg:md:-x-8 text-green-50 bg-transparent"
+        class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 lg:md:-x-8 text-gray-900 md:text-green-50 bg-transparent"
         v-if="router.path === '/'"
       >
         <li
@@ -42,10 +42,7 @@
         </li>
       </ul>
     </div>
-    <button
-      @click="sidebarOpen = !sidebarOpen"
-      class="block md:hidden relative z-30"
-    >
+    <button @click="sidebarOpen = !sidebarOpen" class="block md:hidden z-30">
       <Icon name="uim:bars" class="w-6 h-6 text-white" />
     </button>
   </nav>

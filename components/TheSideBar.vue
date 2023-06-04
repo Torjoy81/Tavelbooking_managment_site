@@ -69,8 +69,7 @@ function update_CheckValue(item: any) {
         }
       }
     });
-    emit("update:hotel_service", category.value.hotel_service),
-      emit("update:room_service", category.value.room_service);
+    emit("update:hotel_service", category.value.hotel_service);
   } else {
     category.value.room_service = item.value;
     item.value.forEach((checkService: any) => {
@@ -82,8 +81,8 @@ function update_CheckValue(item: any) {
         }
       }
     });
-    emit("update:hotel_service", category.value.hotel_service),
-      emit("update:room_service", category.value.room_service);
+
+    emit("update:room_service", category.value.room_service);
   }
 }
 

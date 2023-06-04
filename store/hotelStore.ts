@@ -35,6 +35,8 @@ export const useHotelStore = defineStore("Hotels", () => {
       (item: HotelData) => item.rooms.length !== 0
     );
 
+    console.log(filterHotelData.value);
+
     if (data) {
       return "success";
     }

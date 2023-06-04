@@ -1,20 +1,17 @@
 import { Hotel_Service, Room_Facilities } from "@prisma/client";
 import {
   useFilterAllService,
-  useFilterByCity,
   useFilterByHotelService,
   useFilterByPrice,
   useFilterByRoomService,
   useFilterForALLCity,
   useFilterServices_price,
-} from "~/server/db/configDB";
+} from "~/server/db/queryforAll";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
-  if (query.city && query.city !== "ALL") {
-    return await useFilterByCity(<string>query.city);
-  } else if (query.hotel_service) {
+  if (query.hotel_service) {
     return await useFilterByHotelService(<Hotel_Service[]>query.hotel_service);
   } else if (query.room_service) {
     return await useFilterByRoomService(<Room_Facilities[]>query.room_service);

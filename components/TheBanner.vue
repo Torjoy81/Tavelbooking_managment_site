@@ -1,61 +1,31 @@
 <template>
-  <div
-    class="w-full min-h-[50vh] font-sans text-gray-900 bg-banner bg-no-repeat bg-cover"
-  >
-    <slot name="addNav"></slot>
-    <div class="flex flex-col">
-      <div
-        class="text-yellow-50 font-banner-head font-semibold text-4xl text-center"
+  <div class="">
+    <NuxtImg
+      class="w-full md:h-[650px] h-[700px]"
+      src="/img/Banner1.jpeg"
+      alt=""
+    />
+    <div class="absolute inset-0 flex flex-col items-center justify-center">
+      <h1
+        class="md:text-6xl text-3xl font-banner-head font-extrabold text-center mb-8"
       >
-        <div>Make easy</div>
-        <div>Your travel experience</div>
-      </div>
-      <div class="mt-5 p-4">
-        <form
-          class="flex flex-col md:flex-row gap-2 justify-center items-center"
+        <span class="text-orange-200 leading-relaxed p-1.5"
+          >Get Ready to Explore
+        </span>
+        <br />
+        <span class="text-purple-200"> with EasyBooking</span>
+      </h1>
+      <div class="w-full inline-flex justify-center items-center gap-3">
+        <AutoCompleteBox
+          :prop-value="autoCompleteProps"
+          class="md:w-1/6 w-1/3"
+        />
+        <button
+          class="flex items-center bg-green-300 text-white font-bold p-2 rounded-xl hover:shadow-2xl hover:bg-green-400"
         >
-          <AutoCompleteBox :prop-value="autoCompleteProps" />
-          <div class="flex">
-            <VDatePicker
-              v-model.range="range"
-              :masks="masks"
-              :disabled-dates="disabledDates"
-            >
-              <template #default="{ inputValue, inputEvents }">
-                <div class="relative">
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2 pl-8 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    :value="inputValue.start"
-                    v-on="inputEvents.start"
-                  />
-                  <Icon
-                    name="uim:calender"
-                    class="absolute inset-y-2 left-1 h-5 w-5 text-green-300"
-                  />
-                </div>
-                <Icon
-                  name="uim:arrow-circle-right"
-                  class="h-8 w-8 text-white"
-                  v-if="windowSc.width > 810"
-                />
-                <div class="relative">
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm p-2 pl-8 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                    :value="inputValue.start"
-                    v-on="inputEvents.start"
-                  />
-                  <Icon
-                    name="uim:calender"
-                    class="absolute inset-y-2 left-1 h-5 w-5 text-green-300"
-                  />
-                </div>
-              </template>
-            </VDatePicker>
-          </div>
-          <BaseDropDown />
-        </form>
+          <Icon name="material-symbols:search" class="w-6 h-6 ml-2" />
+          <span>Search</span>
+        </button>
       </div>
     </div>
   </div>
@@ -63,6 +33,7 @@
 <script setup lang="ts">
 import { DatePicker as VDatePicker } from "v-calendar";
 import "v-calendar/style.css";
+
 const todayDate = new Date();
 
 const range = ref({

@@ -1,9 +1,8 @@
 <template>
-  <TheBanner v-if="router.path === '/'">
-    <template #addNav>
-      <TheNav />
-    </template>
-  </TheBanner>
+  <div v-if="router.path === '/'" class="relative">
+    <TheNav />
+    <TheBanner />
+  </div>
   <TheNav v-else />
   <slot></slot>
   <TheFooter footer-title="EsayBook" :footer-feature="footerFeature" />
