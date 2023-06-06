@@ -6,6 +6,8 @@ import {
   useFilterByRoomService,
   useFilterForALLCity,
   useFilterServices_price,
+  useFilterByPrice_Hotel,
+  useFilterByPrice_Room,
 } from "~/server/db/queryforAll";
 
 export default defineEventHandler(async (event) => {
@@ -19,6 +21,18 @@ export default defineEventHandler(async (event) => {
     return await useFilterByPrice(
       parseFloat(query.minprice.toString()),
       parseFloat(query.maxprice.toString())
+    );
+  } else if (query.hotel_service && query.minprice && query.maxprice) {
+    return await useFilterByPrice_Hotel(
+      parseFloat(query.minprice.toString()),
+      parseFloat(query.maxprice.toString()),
+      query.hotel_service as unknown as Hotel_Service[]
+    );
+  } else if (query.room_service && query.minprice && query.maxprice) {
+    return await useFilterByPrice_Room(
+      parseFloat(query.minprice.toString()),
+      parseFloat(query.maxprice.toString()),
+      query.room_service as unknown as Room_Facilities[]
     );
   } else if (query.hotel_service && query.room_service) {
     return await useFilterAllService(

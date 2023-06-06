@@ -6,6 +6,8 @@ import {
   useCityFilterByPrice,
   useCityFilterAllService,
   useCityFilterServices_price,
+  useCityFilterByPrice_Room,
+  useCityFilterByPrice_Hotel,
 } from "~/server/db/queryforAcity";
 
 export default defineEventHandler(async (event) => {
@@ -28,6 +30,28 @@ export default defineEventHandler(async (event) => {
       <string>query.city,
       parseFloat(query.minprice!.toString()),
       parseFloat(query.maxprice!.toString())
+    );
+  } else if (
+    query.hotel_service &&
+    query.minprice !== "0" &&
+    query.maxprice !== "0"
+  ) {
+    return await useCityFilterByPrice_Hotel(
+      <string>query.city,
+      parseFloat(query.minprice!.toString()),
+      parseFloat(query.maxprice!.toString()),
+      <Hotel_Service[]>query.hotel_service
+    );
+  } else if (
+    query.room_service &&
+    query.minprice !== "0" &&
+    query.maxprice !== "0"
+  ) {
+    return await useCityFilterByPrice_Room(
+      <string>query.city,
+      parseFloat(query.minprice!.toString()),
+      parseFloat(query.maxprice!.toString()),
+      <Room_Facilities[]>query.room_service
     );
   } else if (query.hotel_service && query.room_service && query.city) {
     return await useCityFilterAllService(

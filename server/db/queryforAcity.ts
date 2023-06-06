@@ -70,6 +70,57 @@ export const useCityFilterByPrice = async (
     },
   });
 };
+export const useCityFilterByPrice_Hotel = async (
+  City: string,
+  minPrice: number,
+  maxPrice: number,
+  hotel_service: Hotel_Service[]
+) => {
+  return await prisma.hotel.findMany({
+    include: {
+      rooms: {
+        where: {
+          pricePerDay: {
+            gt: minPrice,
+            lt: maxPrice,
+          },
+        },
+      },
+    },
+    where: {
+      city: City,
+      hotel_facilities: {
+        hasEvery: <Hotel_Service[]>hotel_service,
+      },
+    },
+  });
+};
+
+export const useCityFilterByPrice_Room = async (
+  City: string,
+  minPrice: number,
+  maxPrice: number,
+  room_service: Room_Facilities[]
+) => {
+  return await prisma.hotel.findMany({
+    where: {
+      city: City,
+    },
+    include: {
+      rooms: {
+        where: {
+          pricePerDay: {
+            gt: minPrice,
+            lt: maxPrice,
+          },
+          room_service: {
+            hasEvery: <Room_Facilities[]>room_service,
+          },
+        },
+      },
+    },
+  });
+};
 export const useCityFilterAllService = async (
   City: string,
   hotel_service: Hotel_Service[],

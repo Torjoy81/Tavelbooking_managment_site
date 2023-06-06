@@ -6,6 +6,10 @@
           class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
           href="#"
           aria-label="Previous"
+          v-if="paginateStore.currentPageNumber !== 1"
+          @click.stop="
+            paginateStore.handlePageNumber(paginateStore.currentPageNumber - 1)
+          "
         >
           <Icon name="ic:sharp-keyboard-arrow-left" class="text-sm" />
         </a>
@@ -28,6 +32,10 @@
           class="mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-light-300"
           href="#"
           aria-label="Next"
+          v-if="paginateStore.currentPageNumber !== paginateStore.countPage"
+          @click.stop="
+            paginateStore.handlePageNumber(paginateStore.currentPageNumber + 1)
+          "
         >
           <Icon name="ic:sharp-keyboard-arrow-right" class="text-sm" />
         </a>

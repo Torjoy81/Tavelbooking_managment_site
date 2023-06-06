@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mx-auto">
     <ul class="my-3" v-for="(section, index) in filters">
       <li class="border p-4 shadow-lg bg-gray-200 rounded w-[280px]">
         <button

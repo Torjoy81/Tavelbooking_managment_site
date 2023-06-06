@@ -101,30 +101,3 @@ const props = defineProps<{
 const { address, hotel_name, description, hotel_facilities, rooms, id } =
   props.hotelData;
 </script>
-<!-- <div class="flex flex-col justify-start">
-          <div>
-            <h5 class="mb-2 text-xl font-medium text-neutral-800">
-              {{ hotel_name }}
-            </h5>
-            <p class="mb-3 text-xs text-neutral-600">
-              {{ address }}
-            </p>
-          </div>
-          <div class="text-xs font-light font-proza line-clamp-3">
-            {{ description }}
-          </div>
-        </div> -->
-
-<!-- <div class="flex">
-      <ul class="inline">
-        <li
-          class="text-sm text-sky-300"
-          v-for="item in hotel_facilities.slice(0, 2)"
-        >
-          {{
-            item.split("_").join(" ").charAt(0) +
-            item.split("_").join(" ").slice(1).toLowerCase()
-          }}
-        </li>
-      </ul>
-    </div> -->

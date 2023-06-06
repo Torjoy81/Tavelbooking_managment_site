@@ -1,6 +1,7 @@
 <template>
   <nav
-    class="absolute w-full flex flex-wrap justify-between items-center py-8 px-6 mx-auto md:px-12 lg:px-16 xl:px-24"
+    class="w-full flex flex-wrap justify-between items-center py-8 px-6 mx-auto md:px-12 lg:px-16 xl:px-24"
+    :class="{ absolute: router.path === '/' || router.path === '/hotels' }"
   >
     <a href="#" class="text-3xl md:text-4xl font-bold tracking-wide">
       <span class="text-orange-300">Easy</span
@@ -18,9 +19,9 @@
         <li
           v-for="menu in navMenus"
           class="text-lg md:text-base lg:text-lg font-medium group"
-          :class="{ 'text-green-200': activeMenu === menu }"
+          :class="{ 'text-green-200': activeMenu === menu.name }"
         >
-          <a href="#"> {{ menu }} </a>
+          <NuxtLink :to="menu.path"> {{ menu.name }} </NuxtLink>
           <div
             class="h-0.5 bg-green-200 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out"
           />
@@ -33,9 +34,9 @@
         <li
           v-for="menu in navMenus"
           class="text-lg md:text-base lg:text-lg font-medium group text-slate-800"
-          :class="{ 'text-green-200': activeMenu === menu }"
+          :class="{ 'text-green-200': activeMenu === menu.name }"
         >
-          <a href="#"> {{ menu }} </a>
+          <NuxtLink :to="menu.path"> {{ menu.name }} </NuxtLink>
           <div
             class="h-0.5 bg-green-200 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out"
           />
@@ -43,18 +44,37 @@
       </ul>
     </div>
     <button @click="sidebarOpen = !sidebarOpen" class="block md:hidden z-30">
-      <Icon name="uim:bars" class="w-6 h-6 text-white" />
+      <Icon
+        name="uim:bars"
+        class="w-6 h-6"
+        :class="{ 'text-white': router.path === '/' }"
+      />
     </button>
   </nav>
 </template>
 
 <script setup lang="ts">
 const navMenus = ref([
-  "Home",
-  "BookIng Destination",
-  "Contact",
-  "About",
-  "FAQs",
+  {
+    name: "Home",
+    path: "/",
+  },
+  {
+    name: "Destination",
+    path: "/hotels",
+  },
+  {
+    name: "Service",
+    path: "#",
+  },
+  {
+    name: "About",
+    path: "#",
+  },
+  {
+    name: "Contact",
+    path: "#",
+  },
 ]);
 const activeMenu = ref("Home");
 const sidebarOpen = ref(false);

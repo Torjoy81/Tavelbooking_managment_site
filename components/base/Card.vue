@@ -1,9 +1,9 @@
 <template>
   <div
-    class="max-w-sm rounded overflow-hidden shadow-lg border border-gray-200"
+    class="max-w-[300px] rounded-xl overflow-hidden shadow-xl border border-gray-200"
   >
     <slot name="imageSet"></slot>
-    <div class="px-6 py-4">
+    <div class="px-6 py-4 bg-white/30 backdrop-blur-md">
       <div class="font-sans font-light text-2xl mb-2">
         <slot name="cardIcon"></slot> {{ cardTitle }}
       </div>

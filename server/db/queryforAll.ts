@@ -47,6 +47,52 @@ export const useFilterByPrice = async (minPrice: number, maxPrice: number) => {
   });
 };
 
+export const useFilterByPrice_Hotel = async (
+  minPrice: number,
+  maxPrice: number,
+  hotel_service: Hotel_Service[]
+) => {
+  return await prisma.hotel.findMany({
+    include: {
+      rooms: {
+        where: {
+          pricePerDay: {
+            gt: minPrice,
+            lt: maxPrice,
+          },
+        },
+      },
+    },
+    where: {
+      hotel_facilities: {
+        hasEvery: <Hotel_Service[]>hotel_service,
+      },
+    },
+  });
+};
+
+export const useFilterByPrice_Room = async (
+  minPrice: number,
+  maxPrice: number,
+  room_service: Room_Facilities[]
+) => {
+  return await prisma.hotel.findMany({
+    include: {
+      rooms: {
+        where: {
+          pricePerDay: {
+            gt: minPrice,
+            lt: maxPrice,
+          },
+          room_service: {
+            hasEvery: <Room_Facilities[]>room_service,
+          },
+        },
+      },
+    },
+  });
+};
+
 export const useFilterAllService = async (
   hotel_service: Hotel_Service[],
   room_service: Room_Facilities[]

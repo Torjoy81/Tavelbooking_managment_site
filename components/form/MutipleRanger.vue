@@ -1,5 +1,5 @@
 <template>
-  <div class="relative my-6">
+  <div class="relative my-6 mx-auto">
     <div
       class="h-1.5 w-[280px] overflow-hidden rounded-sm bg-gray-300 font-sans text-xs font-medium"
     >
