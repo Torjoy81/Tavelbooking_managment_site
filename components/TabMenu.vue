@@ -44,8 +44,6 @@
   </HeadlessTabGroup>
 </template>
 <script setup lang="ts">
-import { Hotel, Room } from "@prisma/client";
-
 const tabList = ref<string[]>([
   "OverView",
   "Rooms",
@@ -55,8 +53,6 @@ const tabList = ref<string[]>([
 ]);
 
 const { hotel } = defineProps<{
-  hotel: Hotel & {
-    rooms: Room[];
-  };
+  hotel: any;
 }>();
 </script>

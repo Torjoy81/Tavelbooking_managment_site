@@ -93,9 +93,8 @@
 </template>
 
 <script setup lang="ts">
-import { Room } from "@prisma/client";
 const { rooms } = defineProps<{
-  rooms: Room[] | undefined;
+  rooms: any;
 }>();
 
 const iconValue = useRoomServiceIcon();

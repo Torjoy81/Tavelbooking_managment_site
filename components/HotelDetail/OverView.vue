@@ -58,10 +58,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Hotel } from "@prisma/client";
-
 const { hotel } = defineProps<{
-  hotel: Hotel;
+  hotel: any;
 }>();
 
 const iconValue = useHotelIcon();
