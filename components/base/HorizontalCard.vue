@@ -86,15 +86,8 @@
 </template>
 
 <script setup lang="ts">
-import { Prisma } from "@prisma/client";
-type HotelData = Prisma.HotelGetPayload<{
-  include: {
-    rooms: true;
-  };
-}>;
-
 const props = defineProps<{
-  hotelData: HotelData;
+  hotelData: any;
   totalDayDiff?: number;
 }>();
 
