@@ -8,7 +8,7 @@ import {
   useFilterServices_price,
   useFilterByPrice_Hotel,
   useFilterByPrice_Room,
-} from "~/server/db/queryforAll";
+} from "~/db/queryforAll";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
