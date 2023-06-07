@@ -13,14 +13,16 @@ import {
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
+  console.log(query);
+
   if (query.hotel_service) {
     return await useFilterByHotelService(<Hotel_Service[]>query.hotel_service);
   } else if (query.room_service) {
     return await useFilterByRoomService(<Room_Facilities[]>query.room_service);
-  } else if (query.minprice && query.maxprice) {
+  } else if (query.minprice !== "0" && query.maxprice !== "0") {
     return await useFilterByPrice(
-      parseFloat(query.minprice.toString()),
-      parseFloat(query.maxprice.toString())
+      parseFloat(query.minprice!.toString()),
+      parseFloat(query.maxprice!.toString())
     );
   } else if (query.hotel_service && query.minprice && query.maxprice) {
     return await useFilterByPrice_Hotel(

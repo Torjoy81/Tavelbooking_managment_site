@@ -19,9 +19,11 @@
         <AutoCompleteBox
           :prop-value="autoCompleteProps"
           class="md:w-1/6 w-1/3"
+          v-model:get-city="navigateCity"
         />
         <button
           class="flex items-center bg-green-300 text-white font-bold p-2 rounded-xl hover:shadow-2xl hover:bg-green-400"
+          @click="onHandleCity"
         >
           <Icon name="material-symbols:search" class="w-6 h-6 ml-2" />
           <span>Search</span>
@@ -31,54 +33,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { DatePicker as VDatePicker } from "v-calendar";
-import "v-calendar/style.css";
-
-const todayDate = new Date();
-
-const range = ref({
-  start: new Date(
-    todayDate.getFullYear(),
-    todayDate.getMonth(),
-    todayDate.getDate()
-  ),
-  end: new Date(
-    todayDate.getFullYear(),
-    todayDate.getMonth(),
-    todayDate.getDate() + 1
-  ),
-});
-
-const masks = ref({
-  input: "YYYY-MM-DD",
-});
-
-const disabledDates = ref([
-  {
-    start: null,
-    end: new Date(
-      todayDate.getFullYear(),
-      todayDate.getMonth(),
-      todayDate.getDate() - 1
-    ),
-  },
-]);
-
-const windowSc = shallowReactive({
-  width: 0,
-});
-
-onBeforeMount(() => {
-  window.addEventListener("resize", () => {
-    windowSc.width = window.innerWidth;
-  });
-});
-
-onMounted(() => {
-  windowSc.width = window.innerWidth;
-});
-
 const hotelsData = useHotelStore();
 
 const autoCompleteProps = hotelsData.getCity;
+
+const navigateCity = ref("ALL");
+
+function onHandleCity() {
+  navigateTo(`/hotels?city=${navigateCity.value}`);
+}
 </script>

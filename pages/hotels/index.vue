@@ -7,8 +7,8 @@
       <template #default>
         <div class="flex flex-col">
           <FormMutipleRanger
-            v-model:maxprice="filterQuery.maxPrice"
-            v-model:minprice="filterQuery.minPrice"
+            v-model:maxprice="filterQuery.maxprice"
+            v-model:minprice="filterQuery.minprice"
           />
           <TheSideBar
             v-model:hotel_service="filterQuery.hotel_service"
@@ -31,11 +31,11 @@
       <div class="flex flex-col items-center sm:hidden">
         <SearchFilter
           v-model:city-value="filterQuery.city"
-          v-model:day-diff="filterQuery.totalDay"
+          v-model:day-diff="totalDay"
         />
         <FormMutipleRanger
-          v-model:maxprice="filterQuery.maxPrice"
-          v-model:minprice="filterQuery.minPrice"
+          v-model:maxprice="filterQuery.maxprice"
+          v-model:minprice="filterQuery.minprice"
         />
         <TheSideBar
           v-model:hotel_service="filterQuery.hotel_service"
@@ -49,7 +49,7 @@
           v-for="hotelInfo in paginateStore.paginateData"
           :key="hotelInfo.id"
           class="mb-8"
-          :total-day-diff="filterQuery.totalDay"
+          :total-day-diff="totalDay"
           v-else
         />
         <BasePagination />
@@ -99,52 +99,69 @@
 <script setup lang="ts">
 const paginateStore = useCurrentPageStore();
 const HotelData = useHotelStore();
-
+const route = useRoute();
 const iconHotel = useHotelIcon();
 
-const filterQuery = reactive({
-  minPrice: 0,
-  maxPrice: 0,
-  totalDay: 0,
+const filterQuery = ref({
   city: "ALL",
+  minprice: 0,
+  maxprice: 0,
   hotel_service: [],
   room_service: [],
 });
 
-const route = useRoute();
+const totalDay = ref(0);
 
 const loading = ref(false);
 
 const mobileFiltersOpen = ref(false);
 
-watch(filterQuery, async () => {
-  const queryValue = {
-    city: filterQuery.city,
-    hotel_service: filterQuery.hotel_service,
-    room_service: filterQuery.room_service,
-    minprice: filterQuery.minPrice,
-    maxprice: filterQuery.maxPrice,
-  };
+if (
+  route.path === "/hotels" &&
+  route.query.city !== undefined &&
+  route.query.city !== "ALL"
+) {
+  const { data, pending, error } = await useFetch("/api/hotels/filterAcity", {
+    query: { ...filterQuery.value, city: route.query.city },
+  });
+  loading.value = pending.value;
+  filterQuery.value = { ...filterQuery.value, city: <string>route.query.city };
+  HotelData.fetchFilterHotelData(data);
+} else {
+  const { data, pending, error } = await useFetch("/api/hotels/filterAll", {
+    query: filterQuery.value,
+  });
+  loading.value = pending.value;
 
-  if (filterQuery.city === "ALL") {
+  HotelData.fetchFilterHotelData(data);
+}
+
+watch(filterQuery.value, async (newValue, oldValue) => {
+  console.log(newValue);
+  console.log(oldValue);
+
+  if (filterQuery.value.city === "ALL") {
     const { data, pending, error } = await useFetch("/api/hotels/filterAll", {
-      query: queryValue,
+      query: filterQuery.value,
     });
     loading.value = pending.value;
-    console.log(data.value);
 
     HotelData.fetchFilterHotelData(data);
   } else {
     const { data, pending, error } = await useFetch("/api/hotels/filterAcity", {
-      query: queryValue,
+      query: filterQuery.value,
     });
-    console.log(data.value);
+
     loading.value = pending.value;
 
     if (!pending.value) {
       HotelData.fetchFilterHotelData(data);
     }
   }
+});
+
+onBeforeMount(() => {
+  console.log(filterQuery.value);
 });
 </script>
 <style scoped>

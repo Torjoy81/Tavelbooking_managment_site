@@ -79,8 +79,9 @@ type AutoCompleteType = {
 };
 const route = useRoute();
 
-const { propValue } = defineProps<{
+const { propValue, getCity = "ALL" } = defineProps<{
   propValue: AutoCompleteType[];
+  getCity?: string;
 }>();
 
 let selectedCity = route.query.city
@@ -103,11 +104,12 @@ let filterValue = computed(() =>
       )
 );
 
-const emit = defineEmits(["passcity"]);
+const emit = defineEmits(["passcity", "update:getCity"]);
 
 watch(selectedCity, (newValue, oldValue) => {
   if (newValue !== oldValue) {
     emit("passcity", newValue.value);
+    emit("update:getCity", newValue.value);
   }
 });
 </script>
