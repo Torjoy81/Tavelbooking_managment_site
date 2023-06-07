@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     "nuxt-icon",
     "@nuxt/image-edge",
     "@pinia/nuxt",
-    "@nuxtjs/supabase",
     "@vueuse/nuxt",
     "nuxt-swiper",
   ],
