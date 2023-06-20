@@ -6,7 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-28020728.5df24eb",
@@ -22,14 +22,14 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.9",
     "@popperjs/core": "^2.11.8",
-    "@prisma/client": "4.13.0",
+    "@prisma/client": "^4.15.0",
     "@types/lodash": "^4.14.194",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
     "nuxt-headlessui": "^1.1.4",
     "nuxt-swiper": "^1.1.0",
     "pinia": "^2.0.35",
-    "prisma": "^4.14.0",
+    "prisma": "^4.15.0",
     "superjson": "^1.12.3",
     "v-calendar": "^3.0.3"
   }
