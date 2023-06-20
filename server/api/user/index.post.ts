@@ -1,20 +1,18 @@
-// import { PrismaClient } from "@prisma/client";
-// import argon2 from "argon2";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// export default defineEventHandler(async (event) => {
-//   const body = await readBody(event);
-//   const hashing = await argon2.hash(body.password);
+export default defineEventHandler(async (event) => {
+  const body = await readBody(event);
 
-//   await prisma.customer.create({
-//     data: {
-//       firstName: body.firstName,
-//       lastName: body.lastName,
-//       email: body.email,
-//       phone: body.phone,
-//       Hashedpassword: hashing,
-//     },
-//   });
-//   return "Data is Created";
-// });
+  await prisma.customer.create({
+    data: {
+      firstName: body.firstName,
+      lastName: body.lastName,
+      email: body.email,
+      phone: body.phone,
+      Hashedpassword: body.password,
+    },
+  });
+  return "Data is Created";
+});
