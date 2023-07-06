@@ -5,7 +5,11 @@
     <h2 class="font-bold text-2xl text-[#002D74]">Search</h2>
 
     <form action="">
-      <AutoCompleteBox :prop-value="autoCompleteProps" @passcity="sendCity" />
+      <AutoCompleteBox
+        v-if="route.path !== `/hotels/${route.params.id}`"
+        :prop-value="autoCompleteProps"
+        @passcity="sendCity"
+      />
       <div class="relative">
         <VDatePicker
           v-model.range="range"
@@ -64,7 +68,7 @@ import { DatePicker as VDatePicker } from "v-calendar";
 import "v-calendar/style.css";
 
 const hotelsData = useHotelStore();
-
+const route = useRoute();
 const autoCompleteProps = hotelsData.getCity;
 
 const emit = defineEmits(["update:cityValue", "update:dayDiff"]);
@@ -117,6 +121,6 @@ watch(range, (newRange, oldRange) => {
 
 defineProps<{
   dayDiff: number;
-  cityValue: string;
+  cityValue?: string;
 }>();
 </script>

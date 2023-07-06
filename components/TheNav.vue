@@ -1,7 +1,6 @@
 <template>
   <nav
-    class="w-full flex flex-wrap justify-between items-center py-8 px-6 mx-auto md:px-12 lg:px-16 xl:px-24"
-    :class="{ absolute: router.path === '/' || router.path === '/hotels' }"
+    class="w-full flex flex-wrap justify-between items-center py-8 px-6 mx-auto md:px-12 lg:px-16 xl:px-24 absolute"
   >
     <a href="#" class="text-3xl md:text-4xl font-bold tracking-wide">
       <span class="text-orange-300">Easy</span
@@ -9,11 +8,11 @@
       ><span class="text-purple-600" v-else>Booking</span>
     </a>
     <div
-      class="inset-0 transition-all bg-white/70 backdrop-blur-xl z-20 md:static md:flex md:bg-transparent items-center justify-center lg:justify-end space-y-8 md:space-y-0 md:space-x-8 flex-col md:flex-row lg:space-x-14"
+      class="inset-0 transition-all xsm:bg-white/70 xsm:backdrop-blur-xl z-20 md:static md:flex md:bg-none items-center justify-center lg:justify-end space-y-8 md:space-y-0 md:space-x-8 flex-col md:flex-row lg:space-x-14"
       :class="sidebarOpen ? 'fixed flex' : 'hidden'"
     >
       <ul
-        class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 lg:md:-x-8 text-gray-900 md:text-green-50 bg-transparent"
+        class="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6 lg:md:-x-8 text-gray-900 md:text-green-50"
         v-if="router.path === '/'"
       >
         <li
@@ -25,6 +24,27 @@
           <div
             class="h-0.5 bg-green-200 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out"
           />
+        </li>
+        <li v-if="!user">
+          <NuxtLink
+            to="/register"
+            class="font-semibold text-white py-2 px-4 border border-blue rounded"
+          >
+            SING UP
+          </NuxtLink>
+        </li>
+        <li v-if="!user">
+          <NuxtLink to="/login" class="font-semibold text-white py-2 px-4">
+            LOGIN
+          </NuxtLink>
+        </li>
+        <li v-if="user">
+          <button
+            class="font-semibold text-white py-2 px-4 border border-blue rounded"
+            @click="client.auth.signOut"
+          >
+            LOGOUT
+          </button>
         </li>
       </ul>
       <ul
@@ -40,6 +60,30 @@
           <div
             class="h-0.5 bg-green-200 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out"
           />
+        </li>
+        <li v-if="!user">
+          <NuxtLink
+            to="/register"
+            class="font-semibold text-black py-2 px-4 border border-black rounded"
+          >
+            SING UP
+          </NuxtLink>
+        </li>
+        <li v-if="!user">
+          <NuxtLink
+            to="/login"
+            class="bg-transparent font-semibold text-black py-2 px-4"
+          >
+            LOGIN
+          </NuxtLink>
+        </li>
+        <li v-if="user">
+          <button
+            class="bg-transparent font-semibold text-black py-2 px-4 border border-black rounded"
+            @click="client.auth.signOut"
+          >
+            LOGOUT
+          </button>
         </li>
       </ul>
     </div>
@@ -79,4 +123,7 @@ const navMenus = ref([
 const activeMenu = ref("Home");
 const sidebarOpen = ref(false);
 const router = useRoute();
+
+const user = useSupabaseUser();
+const client = useSupabaseClient();
 </script>

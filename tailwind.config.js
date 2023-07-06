@@ -39,7 +39,7 @@ module.exports = {
         banner: "url(./assets/img/Banner1.jpeg)",
       },
       screens: {
-        xsm: { max: "400px" },
+        xsm: { max: "420px" },
         sm: { max: "639px" },
       },
     },

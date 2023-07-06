@@ -5,7 +5,11 @@
       @mobile-dialog-box="(itm) => (mobileFiltersOpen = itm)"
     >
       <template #default>
-        <div class="flex flex-col">
+        <div class="flex flex-col items-center">
+          <SearchFilter
+            v-model:city-value="filterQuery.city"
+            v-model:day-diff="totalDay"
+          />
           <FormMutipleRanger
             v-model:maxprice="filterQuery.maxprice"
             v-model:minprice="filterQuery.minprice"
@@ -44,53 +48,59 @@
       </div>
       <div class="flex flex-col items-center displayLarge">
         <BaseSpinner v-if="loading" />
-        <BaseHorizontalCard
-          :hotel-data="hotelInfo"
-          v-for="hotelInfo in paginateStore.paginateData"
-          :key="hotelInfo.id"
-          class="mb-8"
-          :total-day-diff="totalDay"
-          v-else
-        />
+        <div
+          class="text-4xl w-full mx-auto text-gray-300"
+          v-else-if="paginateStore.paginateData === null"
+        >
+          There is no Hotel for your filter search
+        </div>
+        <div v-else v-for="hotelInfo in paginateStore.paginateData">
+          <BaseHorizontalCard
+            :key="hotelInfo.id"
+            :hotel-data="hotelInfo"
+            :rooms="hotelInfo.rooms"
+            class="mb-8"
+            :total-day-diff="totalDay"
+          />
+        </div>
+
         <BasePagination />
       </div>
       <div class="flex flex-col items-center space-y-5 displaySmall">
         <BaseSpinner v-if="loading" />
-        <BaseCard
-          v-for="hotelInfo in paginateStore.paginateData"
-          :card-title="hotelInfo.hotel_name"
-          :key="hotelInfo.id"
-        >
-          <template #imageSet>
-            <img
-              class="rounded-t-lg md:rounded-none md:rounded-l-lg md:p-3"
-              src="/img/rooms/hotel_sm.jpg"
-              srcset=""
-            />
-          </template>
-          <template #cardBrief>
-            <p class="mb-3 text-xs text-neutral-600">
-              <Icon name="map:postal-code" />{{ hotelInfo.address }}
-            </p>
-            <p class="text-gray-700 text-xs leading-relaxed line-clamp-3">
-              {{ hotelInfo.description }}
-            </p>
-            <ul class="flex gap-x-2">
-              <li
-                class="text-sm text-sky-300"
-                v-for="item in hotelInfo.hotel_facilities.slice(0, 2)"
-              >
-                <Icon
-                  :name="iconHotel[item]"
-                  class="w-4 h-4 mr-1 text-slate-500"
-                />{{
-                  item.split("_").join(" ").charAt(0) +
-                  item.split("_").join(" ").slice(1).toLowerCase()
-                }}
-              </li>
-            </ul>
-          </template>
-        </BaseCard>
+        <div v-for="hotelInfo in paginateStore.paginateData">
+          <BaseCard :card-title="hotelInfo.hotel_name" :key="hotelInfo.id">
+            <template #imageSet>
+              <img
+                class="rounded-t-lg md:rounded-none md:rounded-l-lg md:p-3"
+                src="/img/rooms/hotel_sm.jpg"
+                srcset=""
+              />
+            </template>
+            <template #cardBrief>
+              <p class="mb-3 text-xs text-neutral-600">
+                <Icon name="map:postal-code" />{{ hotelInfo.address }}
+              </p>
+              <p class="text-gray-700 text-xs leading-relaxed line-clamp-3">
+                {{ hotelInfo.description }}
+              </p>
+              <ul class="flex gap-x-2">
+                <li
+                  class="text-sm text-sky-300"
+                  v-for="item in hotelInfo.hotel_facilities.slice(0, 2)"
+                >
+                  <Icon
+                    :name="iconHotel[item]"
+                    class="w-4 h-4 mr-1 text-slate-500"
+                  />{{
+                    item.split("_").join(" ").charAt(0) +
+                    item.split("_").join(" ").slice(1).toLowerCase()
+                  }}
+                </li>
+              </ul>
+            </template>
+          </BaseCard>
+        </div>
         <BasePagination />
       </div>
     </div>
@@ -137,16 +147,15 @@ if (
 }
 
 watch(filterQuery.value, async (newValue, oldValue) => {
-  console.log(newValue);
-  console.log(oldValue);
-
   if (filterQuery.value.city === "ALL") {
     const { data, pending, error } = await useFetch("/api/hotels/filterAll", {
       query: filterQuery.value,
     });
     loading.value = pending.value;
 
-    HotelData.fetchFilterHotelData(data);
+    if (!pending.value) {
+      HotelData.fetchFilterHotelData(data);
+    }
   } else {
     const { data, pending, error } = await useFetch("/api/hotels/filterAcity", {
       query: filterQuery.value,
@@ -160,8 +169,8 @@ watch(filterQuery.value, async (newValue, oldValue) => {
   }
 });
 
-onBeforeMount(() => {
-  console.log(filterQuery.value);
+onUpdated(() => {
+  console.log(paginateStore.paginateData);
 });
 </script>
 <style scoped>

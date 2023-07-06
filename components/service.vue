@@ -32,7 +32,7 @@ const sevice = ref<
   }[]
 >([
   {
-    Sname: "Luxurious Hotel & Resort",
+    Sname: "Luxurious Hotel",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Est a sint non accusamus, magni libero corporis vel sequi deleniti perferendis?",
     icon: { name: "fa6-solid:hotel", color: "ground" },

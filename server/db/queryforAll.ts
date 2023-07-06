@@ -38,8 +38,8 @@ export const useFilterByPrice = async (minPrice: number, maxPrice: number) => {
       rooms: {
         where: {
           pricePerDay: {
-            gt: minPrice,
-            lt: maxPrice,
+            gte: minPrice,
+            lte: maxPrice,
           },
         },
       },

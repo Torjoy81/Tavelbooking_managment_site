@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-
+import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-
+  const HashingPass = await bcrypt.hash(body.password, 10);
   try {
     await prisma.customer.create({
       data: {
@@ -12,12 +12,11 @@ export default defineEventHandler(async (event) => {
         lastName: body.lastName,
         email: body.email,
         phone: body.phone,
-        Hashedpassword: body.password,
+        Hashedpassword: HashingPass,
       },
     });
   } catch (e) {
     console.log(e);
-    console.log("Problem prisma");
   }
-  return "Data is Created";
+  return { success: "OK" };
 });

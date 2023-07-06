@@ -30,14 +30,10 @@ export const useHotelStore = defineStore("Hotels", () => {
     }
   }
 
-  async function fetchFilterHotelData(data: any) {
+  function fetchFilterHotelData(data: any) {
     filterHotelData.value = data.value.filter(
       (item: HotelData) => item.rooms.length !== 0
     );
-
-    if (data) {
-      return "success";
-    }
   }
 
   return {

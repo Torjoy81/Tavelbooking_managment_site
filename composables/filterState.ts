@@ -42,26 +42,27 @@ interface FilterType {
   }[];
 }
 
-export const useFilterOption = [
-  {
-    id: "hotel_service",
-    name: "Hotel Service",
-    options: Object.values(Hotel_Service).map((sevice) => ({
-      value: sevice,
-      label: sevice.split("_").join(" "),
-      checked: false,
-    })),
-  },
-  {
-    id: "room_service",
-    name: "Room Service",
-    options: Object.values(Room_Facilities).map((sevice) => ({
-      value: sevice,
-      label: sevice.split("_").join(" "),
-      checked: false,
-    })),
-  },
-];
+export const useFilterOption = () =>
+  useState("FilterOptions", () => [
+    {
+      id: "hotel_service",
+      name: "Hotel Service",
+      options: Object.values(Hotel_Service).map((sevice) => ({
+        value: sevice,
+        label: sevice.split("_").join(" "),
+        checked: false,
+      })),
+    },
+    {
+      id: "room_service",
+      name: "Room Service",
+      options: Object.values(Room_Facilities).map((sevice) => ({
+        value: sevice,
+        label: sevice.split("_").join(" "),
+        checked: false,
+      })),
+    },
+  ]);
 
 export const useIndexOfObject_Array = (
   array: any[],

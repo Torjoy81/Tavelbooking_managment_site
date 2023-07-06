@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@vueuse/nuxt",
     "nuxt-swiper",
+    "@nuxtjs/supabase",
   ],
   postcss: {
     plugins: {
@@ -34,4 +35,5 @@ export default defineNuxtConfig({
   pinia: {
     autoImports: ["defineStore"],
   },
+  ssr: false,
 });

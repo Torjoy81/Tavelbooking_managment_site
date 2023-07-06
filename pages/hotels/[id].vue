@@ -1,9 +1,11 @@
 <template>
-  <div class="flex flex-row justify-center gap-4">
-    <SearchFilter v-model:day-diff="totalDay" />
-    <div class="flex flex-col">
-      <ImageGrid :id="<string>route.params.id" />
-      <TabMenu :hotel="hotelData" />
+  <div class="flex justify-center">
+    <div class="flex justify-center gap-4 mt-20">
+      <SearchFilter v-model:day-diff="totalDay" />
+      <div class="flex flex-col mt">
+        <ImageGrid :id="<string>route.params.id" />
+        <TabMenu :hotel="hotelData" />
+      </div>
     </div>
   </div>
 </template>

@@ -9,7 +9,7 @@
       </p>
     </template>
     <template #default>
-      <form @submit.prevent="onSubmit" class="flex flex-col gap-4 mt-4">
+      <form @submit.prevent="submitForm" class="flex flex-col gap-4 mt-4">
         <FormTextInput
           label-name="First Name"
           type="text"
@@ -95,10 +95,18 @@ const register = ref({
   confirm_pass: "",
 });
 
+const alphaWithSpace = helpers.regex(/^[a-zA-Z\s]*$/);
+
 const rules = computed(() => {
   return {
-    firstName: { required },
-    lastName: { required },
+    firstName: {
+      required,
+      AlphaSpace: helpers.withMessage("value must be alphabet", alphaWithSpace),
+    },
+    lastName: {
+      required,
+      AlphaSpace: helpers.withMessage("value must be alphabet", alphaWithSpace),
+    },
     email: { required, email },
     phone: { required },
     password: { required, minLength: minLength(8) },
@@ -112,15 +120,35 @@ const rules = computed(() => {
   };
 });
 
+const client = useSupabaseClient();
+
 const v$ = useVuelidate(rules, register);
 
-function onSubmit() {
-  v$.value.$validate();
-  if (!v$.value.$error) {
-    const { data } = useFetch("/api/user", {
+const submitForm = async () => {
+  const isValid = await v$.value.$validate();
+
+  if (isValid) {
+    const { data, error } = await useFetch("/api/user", {
       method: "POST",
       body: register.value,
     });
+    console.log(data.value, error.value);
+
+    if (data.value?.success === "OK") {
+      const user = await client.auth.signUp({
+        email: register.value.email,
+        password: register.value.password,
+      });
+      console.log(user);
+    }
   }
-}
+};
+
+// onMounted(()=>{
+//   watchEffect()
+// })
+
+definePageMeta({
+  middleware: ["auth"],
+});
 </script>

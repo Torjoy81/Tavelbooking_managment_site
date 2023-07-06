@@ -20,7 +20,7 @@
           </div>
           <div class="px-10 pt-4 pb-8 bg-white rounded-tr-4xl">
             <h1 class="text-2xl font-semibold text-gray-900">Welcome back!</h1>
-            <form class="mt-12" action="" method="POST">
+            <form class="mt-12" @submit.prevent="loginSubmit">
               <div class="relative">
                 <input
                   id="email"
@@ -28,6 +28,7 @@
                   type="text"
                   class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-rose-600"
                   placeholder="john@doe.com"
+                  v-model="login.email"
                 />
                 <label
                   for="email"
@@ -42,6 +43,7 @@
                   name="password"
                   class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 placeholder-transparent focus:outline-none focus:border-rose-600"
                   placeholder="Password"
+                  v-model="login.password"
                 />
                 <label
                   for="password"
@@ -50,11 +52,12 @@
                 >
               </div>
 
-              <input
-                type="sumbit"
-                value="Sign in"
+              <button
                 class="mt-20 px-4 py-2 rounded bg-rose-500 hover:bg-rose-400 text-white font-semibold text-center block w-full focus:outline-none focus:ring focus:ring-offset-2 focus:ring-rose-500 focus:ring-opacity-80 cursor-pointer"
-              />
+                type="submit"
+              >
+                LOGIN
+              </button>
             </form>
             <a
               href="#"
@@ -68,4 +71,20 @@
     </div>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const login = ref({
+  email: "",
+  password: "",
+});
+const client = useSupabaseClient();
+
+const loginSubmit = async () => {
+  const { data, error } = await client.auth.signInWithPassword({
+    email: login.value.email,
+    password: login.value.password,
+  });
+  if (!error) {
+    navigateTo("/");
+  }
+};
+</script>

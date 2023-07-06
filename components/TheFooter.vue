@@ -11,7 +11,9 @@
             >
           </a>
         </div>
-        <div class="grid grid-cols-2 gap-8 md:gap-6 md:grid-cols-3">
+        <div
+          class="grid grid-cols-2 gap-8 md:gap-6 md:grid-cols-3 lg:grid-cols-4"
+        >
           <div v-for="footerItem in footerFeature">
             <h2
               class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white"

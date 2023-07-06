@@ -60,13 +60,13 @@
           class="text-xs font-semibold"
         >
           <p v-if="room.room_type === 'SINGLE_BED'">
-            {{ "SINGLE BED: " + room.pricePerDay }}
+            {{ "SINGLE BED: " + room.pricePerDay + "€" }}
           </p>
           <p v-else-if="room.room_type === 'DOUBLE_BED'">
-            {{ "DOUBLE BED: " + room.pricePerDay }}
+            {{ "DOUBLE BED: " + room.pricePerDay + "€" }}
           </p>
           <p v-else>
-            {{ "KINGSIZE BED: " + room.pricePerDay }}
+            {{ "KINGSIZE BED: " + room.pricePerDay + "€" }}
           </p>
         </div>
         <div v-else class="text-xs font-semibold" v-for="room in rooms">
@@ -89,8 +89,11 @@
 const props = defineProps<{
   hotelData: any;
   totalDayDiff?: number;
+  rooms: any;
 }>();
 
-const { address, hotel_name, description, hotel_facilities, rooms, id } =
+const { address, hotel_name, description, hotel_facilities, id } =
   props.hotelData;
+
+console.log(props.rooms);
 </script>

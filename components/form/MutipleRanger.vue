@@ -20,6 +20,7 @@
         step="1"
         id="rangeMin"
         @input="(e) => leftInput(e)"
+        @change="handleChange"
       />
       <input
         type="range"
@@ -29,6 +30,7 @@
         id="rangeMax"
         step="1"
         @input="(e) => rightInput(e)"
+        @change="handleChange"
       />
     </div>
     <span class="absolute left-[25%]">{{ inputRange.currentMinValue }}</span>
@@ -39,7 +41,7 @@
 <script setup lang="ts">
 const inputRange = reactive({
   minValue: 0,
-  maxValue: 500,
+  maxValue: 400,
   currentMinValue: 130,
   currentMaxValue: 260,
 });
@@ -56,8 +58,6 @@ function leftInput(e: Event) {
     rangeStyle.minPercentage =
       (inputRange.currentMinValue / inputRange.maxValue) * 100;
   }
-  emit("update:maxprice", inputRange.currentMaxValue);
-  emit("update:minprice", inputRange.currentMinValue);
 }
 
 function rightInput(e: Event) {
@@ -67,11 +67,14 @@ function rightInput(e: Event) {
     rangeStyle.maxPercentage =
       100 - (inputRange.currentMaxValue / inputRange.maxValue) * 100;
   }
-  emit("update:maxprice", inputRange.currentMaxValue);
-  emit("update:minprice", inputRange.currentMinValue);
 }
 
 const emit = defineEmits(["update:minprice", "update:maxprice"]);
+
+const handleChange = () => {
+  emit("update:maxprice", inputRange.currentMaxValue);
+  emit("update:minprice", inputRange.currentMinValue);
+};
 
 defineProps<{
   minprice: number;

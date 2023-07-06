@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { useFilterOption } from "./../composables/filterState";
 
-let filters = useFilterOption;
+let filters = useFilterOption();
 
 const category = ref<{
   [key in "hotel_service" | "room_service"]: string[];
@@ -60,27 +60,24 @@ const category = ref<{
 function update_CheckValue(item: any) {
   if (item.id === "hotel_service") {
     category.value.hotel_service = item.value;
-    item.value.forEach((checkService: any) => {
-      for (const i in filters[0].options) {
-        if (filters[0].options[i].value === checkService) {
-          filters[0].options[i].checked = true;
-        } else {
-          filters[0].options[i].checked = false;
-        }
+    for (const i in filters.value[0].options) {
+      if (item.value.includes(filters.value[0].options[i].value)) {
+        filters.value[0].options[i].checked = true;
+      } else {
+        filters.value[0].options[i].checked = false;
       }
-    });
+    }
+
     emit("update:hotel_service", category.value.hotel_service);
   } else {
     category.value.room_service = item.value;
-    item.value.forEach((checkService: any) => {
-      for (const i in filters[0].options) {
-        if (filters[1].options[i].value === checkService) {
-          filters[1].options[i].checked = true;
-        } else {
-          filters[1].options[i].checked = false;
-        }
+    for (const i in filters.value[1].options) {
+      if (item.value.includes(filters.value[1].options[i].value)) {
+        filters.value[1].options[i].checked = true;
+      } else {
+        filters.value[1].options[i].checked = false;
       }
-    });
+    }
 
     emit("update:room_service", category.value.room_service);
   }

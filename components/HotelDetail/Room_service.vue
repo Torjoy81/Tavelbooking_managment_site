@@ -21,7 +21,7 @@
               <li class="p-1" v-for="nameOfService in roomData.room_service">
                 <Icon :name="iconValue[nameOfService]" class="w-5 h-5" /><span
                   class="p-1 text-xs"
-                  >{{ nameOfService }}</span
+                  >{{ nameOfService.replace("_", " ") }}</span
                 >
               </li>
             </ul>
